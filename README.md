@@ -1,2 +1,3 @@
-# cadeira_padroes_de_projeto
-Respostas de perguntas do primeiro trabalho de Padrões de Projeto
+# Trabalho 1 da cadeira de Padrões de Projeto
+- 5 questões sobre a matéria
+- Feita em dupla por Carlos Eduardo Carvalho Cardoso e Jaelyson Martins
