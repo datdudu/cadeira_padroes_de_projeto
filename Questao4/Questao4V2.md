@@ -2,33 +2,31 @@
 
 #### Introdução
 
-O padrão Observer define uma forma desacoplada de notificar múltiplos interessados (observadores) quando um estado muda. Ele é a raiz conceitual por trás de diversas tecnologias modernas: desde listeners em GUIs, passando por brokers de mensagens em Pub/Sub, até fluxos reativos (Reactive Streams) e arquiteturas orientadas a eventos (EDA).
+O padrão Observer define como um objeto (Sujeito) notifica automaticamente múltiplos objetos interessados (Observadores) quando há mudanças.
+Ele é a raiz conceitual de muitas tecnologias modernas: Pub/Sub (com broker), programação reativa (streams assíncronas) e arquiteturas orientadas a eventos (EDA).
 
-Nesta questão, mostramos o Observer clássico e comparamos seu código com três tecnologias derivadas:
+Nesta resposta, mostramos:
 
-- Publish–Subscribe (Pub/Sub)
-- Reactive Programming (Java Flow API)
-- Arquitetura Orientada a Eventos (EDA)
+- O Observer clássico como referência
+- Três tecnologias derivadas (Pub/Sub, Reactive com Java Flow API e EDA)
+- Código comentado em cada uma, explicando como funciona e comparando com o Observer clássico
 
-Para cada uma, apresentamos:
-- Código essencial
-- Semelhanças com o Observer clássico
-- Diferenças importantes
-
-Ao final, incluímos um diagrama UML textual comparativo da evolução conceitual.
+Ao final, há um diagrama UML textual que relaciona os quatro modelos.
 
 ---
 
 ### 1) Observer clássico (direto 1 → N, local e síncrono)
 
-No padrão original, um Sujeito mantém uma lista de Observadores e os notifica diretamente quando ocorre uma mudança.
+Contexto: Um “Sujeito” gerencia a lista de “Observadores” e os notifica diretamente quando algo muda. É a base para listeners de GUI e handlers de eventos em bibliotecas tradicionais.
 
-#### Código (pacote: observer_classico)
+#### Código comentado (pacote: observer_classico)
 
 Observador.java
 ```java
 package observer_classico;
 
+// Contrato que todo observador precisa implementar.
+// O Sujeito chamará este método para avisar sobre novidades.
 public interface Observador {
     void atualizar(String mensagem);
 }
@@ -38,6 +36,8 @@ Sujeito.java
 ```java
 package observer_classico;
 
+// Contrato do sujeito observado.
+// Permite registrar/remover observadores e notificar todos.
 public interface Sujeito {
     void registrar(Observador o);
     void remover(Observador o);
@@ -52,22 +52,33 @@ package observer_classico;
 import java.util.ArrayList;
 import java.util.List;
 
+// Implementação concreta do sujeito.
+// Mantém uma lista de observadores e notifica todos quando há um evento.
 public class SujeitoConcreto implements Sujeito {
     private List<Observador> observadores = new ArrayList<>();
 
     @Override
-    public void registrar(Observador o) { observadores.add(o); }
+    public void registrar(Observador o) { 
+        // Observadores são adicionados explicitamente
+        observadores.add(o); 
+    }
 
     @Override
-    public void remover(Observador o) { observadores.remove(o); }
+    public void remover(Observador o) { 
+        // Podem sair a qualquer momento
+        observadores.remove(o); 
+    }
 
     @Override
     public void notificar(String mensagem) {
+        // Notificação síncrona e direta a todos os inscritos
         for (Observador o : observadores) {
             o.atualizar(mensagem);
         }
     }
 
+    // Representa um "evento" de negócio: quando algo novo acontece,
+    // o Sujeito chama notificar() para avisar todo mundo.
     public void novaMensagem(String msg) {
         System.out.println("📢 Sujeito gerou novo evento: " + msg);
         notificar(msg);
@@ -79,6 +90,7 @@ ObservadorConcreto.java
 ```java
 package observer_classico;
 
+// Exemplo de observador real que reage às notificações
 public class ObservadorConcreto implements Observador {
     private String nome;
 
@@ -86,6 +98,7 @@ public class ObservadorConcreto implements Observador {
 
     @Override
     public void atualizar(String mensagem) {
+        // Reação simples: imprimir o conteúdo recebido
         System.out.println("🔔 [" + nome + "] recebeu a atualização: " + mensagem);
     }
 }
@@ -95,6 +108,8 @@ Main.java
 ```java
 package observer_classico;
 
+// Demonstração: Registramos observadores e geramos eventos.
+// A comunicação é direta (Sujeito -> Observadores) e síncrona (no mesmo thread).
 public class Main {
     public static void main(String[] args) {
         SujeitoConcreto canal = new SujeitoConcreto();
@@ -108,19 +123,23 @@ public class Main {
 }
 ```
 
-Semelhanças e diferenças (referência base para comparação):
-- Semelhança (conceito base): 1→N, um “emissor” notifica vários “receptores”.
-- Diferença: comunicação direta e local; observadores precisam ser registrados no próprio sujeito; normalmente síncrono.
+Semelhanças e diferenças (referência base):
+- Semelhança conceitual (com todos os modelos): um emissor aciona múltiplos receptores.
+- Diferença: acoplamento e entrega direta; observadores são registrados no sujeito; síncrono e local (mesmo processo).
 
 ---
 
-### 2) Publish–Subscribe (generaliza o Observer com um broker intermediário)
+### 2) Publish–Subscribe (generaliza o Observer com broker intermediário)
 
-O Pub/Sub é a generalização do Observer. Em vez do sujeito notificar diretamente os observadores, um Publisher publica mensagens em tópicos para um Broker, e Subscribers inscritos nesses tópicos as recebem. Isso desacopla completamente emissores e receptores e permite N→N.
+Contexto: O Pub/Sub insere um “Broker” no meio. Publishers publicam mensagens em tópicos, e Subscribers recebem as mensagens via broker se estiverem inscritos. O Publisher não conhece os Subscribers.
 
-Exemplos reais: JMS, RabbitMQ, Apache Kafka, Google Pub/Sub, AWS SNS/SQS, Azure Event Hub, MQTT (IoT).
+Exemplos: JMS, RabbitMQ, Apache Kafka, Google Pub/Sub, AWS SNS/SQS, Azure Event Hub, MQTT.
 
-#### Código (pacote: pubsub)
+Como se relaciona ao Observer:
+- Semelhança: um emissor gera eventos consumidos por vários receptores.
+- Diferença: há um intermediário (broker), que desacopla fortemente as partes; suporta N→N, roteamento por tópicos e distribuição assíncrona.
+
+#### Código comentado (pacote: pubsub)
 
 Broker.java
 ```java
@@ -128,14 +147,18 @@ package pubsub;
 
 import java.util.*;
 
+// "Broker": intermediário que gerencia tópicos e assinantes.
+// É ele quem recebe publicações e as repassa aos inscritos no tópico.
 public class Broker {
     private Map<String, List<Subscriber>> topicos = new HashMap<>();
 
+    // Inscreve um subscriber em um tópico específico
     public void subscribe(String topico, Subscriber sub) {
         topicos.computeIfAbsent(topico, k -> new ArrayList<>()).add(sub);
         System.out.println("📰 " + sub.getNome() + " se inscreveu no tópico: " + topico);
     }
 
+    // Publica uma mensagem no tópico: o broker entrega a todos os inscritos
     public void publish(String topico, String mensagem) {
         System.out.println("\n📢 Publicando no tópico '" + topico + "': " + mensagem);
         List<Subscriber> subs = topicos.get(topico);
@@ -149,12 +172,15 @@ Subscriber.java
 ```java
 package pubsub;
 
+// "Subscriber": receptor de mensagens do broker.
+// Não conhece o Publisher, apenas reage às mensagens do tópico.
 public class Subscriber {
     private String nome;
 
     public Subscriber(String nome) { this.nome = nome; }
     public String getNome() { return nome; }
 
+    // Método chamado pelo broker ao publicar no tópico
     public void receberMensagem(String topico, String mensagem) {
         System.out.println("🔔 [" + nome + "] recebeu no tópico '" + topico + "': " + mensagem);
     }
@@ -165,6 +191,8 @@ Publisher.java
 ```java
 package pubsub;
 
+// "Publisher": produtor que publica mensagens em um tópico via broker.
+// Não conhece nenhum subscriber diretamente.
 public class Publisher {
     private Broker broker;
     private String topico;
@@ -174,6 +202,7 @@ public class Publisher {
         this.topico = topico;
     }
 
+    // Publica a mensagem no tópico escolhido; delivery é responsabilidade do broker
     public void publicar(String mensagem) {
         broker.publish(topico, mensagem);
     }
@@ -184,6 +213,8 @@ MainPubSub.java
 ```java
 package pubsub;
 
+// Demonstração: Subscribers se inscrevem em tópicos no broker.
+// Publishers publicam mensagens; o broker entrega a quem está inscrito.
 public class MainPubSub {
     public static void main(String[] args) {
         Broker broker = new Broker();
@@ -192,10 +223,12 @@ public class MainPubSub {
         Subscriber bruno = new Subscriber("Bruno");
         Subscriber carla = new Subscriber("Carla");
 
+        // Inscrições em tópicos
         broker.subscribe("esportes", alice);
         broker.subscribe("noticias", bruno);
         broker.subscribe("esportes", carla);
 
+        // Dois publishers publicando em tópicos diferentes
         Publisher pubEsportes = new Publisher(broker, "esportes");
         Publisher pubNoticias = new Publisher(broker, "noticias");
 
@@ -206,24 +239,23 @@ public class MainPubSub {
 }
 ```
 
-Semelhanças com o Observer clássico:
-- Mesmo princípio: um emissor publica eventos e múltiplos receptores são notificados.
-- Multiplicidade: comunicação 1→N (e também N→N).
-
-Diferenças:
-- Intermediário (Broker): Publisher e Subscriber não se conhecem.
-- Desacoplamento: muito maior; ideal para sistemas distribuídos.
-- Tópicos/Filas: roteamento por assunto; entrega assíncrona; escalabilidade horizontal.
+Resumo da comparação:
+- Semelhança com Observer: eventos disparam notificações a múltiplos receptores.
+- Diferença: intermediação via broker; alto desacoplamento; roteamento por tópicos; pronto para ambientes distribuídos.
 
 ---
 
 ### 3) Eventos e Reactive Programming (Java Flow API – Observer reativo com backpressure)
 
-Nos streams reativos, o Observer vira a base da programação: fluxos contínuos de notificações assíncronas com controle de pressão (backpressure). A Flow API (Java 9+) é a padronização oficial de Reactive Streams no Java.
+Contexto: Programação reativa usa o Observer como base para streams assíncronas contínuas. A Flow API (Java 9+) padroniza Publisher, Subscriber, Subscription e Processor, suportando backpressure (controle do ritmo).
 
-Exemplos reais: ReactiveX (RxJava, RxJS, RxSwift), Project Reactor (Spring WebFlux), Akka Streams, Java Flow API, Kotlin Flow.
+Exemplos: ReactiveX (RxJava, RxJS, RxSwift), Project Reactor (WebFlux), Akka Streams, Java Flow API, Kotlin Flow.
 
-#### Código (pacote: reactive_flow)
+Como se relaciona ao Observer:
+- Semelhança: Subscribers reagem a eventos emitidos por um Publisher (1→N).
+- Diferença: assíncrono/non-blocking; controle de fluxo com `request(n)`; streams contínuas e composição.
+
+#### Código comentado (pacote: reactive_flow)
 
 MessageSubscriber.java
 ```java
@@ -231,6 +263,8 @@ package reactive_flow;
 
 import java.util.concurrent.Flow;
 
+// Subscriber reativo: implementa o contrato Flow.Subscriber.
+// Recebe eventos e controla o ritmo de consumo via Subscription (backpressure).
 public class MessageSubscriber implements Flow.Subscriber<String> {
     private String nome;
     private Flow.Subscription subscription;
@@ -239,24 +273,28 @@ public class MessageSubscriber implements Flow.Subscriber<String> {
 
     @Override
     public void onSubscribe(Flow.Subscription subscription) {
+        // Após se inscrever, recebe uma Subscription para controlar o fluxo
         this.subscription = subscription;
         System.out.println("🟢 [" + nome + "] se inscreveu.");
-        subscription.request(1); // backpressure: consome no seu ritmo
+        subscription.request(1); // pede o primeiro item (consumo sob demanda)
     }
 
     @Override
     public void onNext(String item) {
+        // Reage a cada item emitido pelo Publisher
         System.out.println("🔔 [" + nome + "] recebeu: " + item);
-        subscription.request(1);
+        subscription.request(1); // pede mais um (fluxo sob controle do consumidor)
     }
 
     @Override
     public void onError(Throwable throwable) {
+        // Tratamento de erro no pipeline reativo
         System.out.println("❌ [" + nome + "] erro: " + throwable.getMessage());
     }
 
     @Override
     public void onComplete() {
+        // Chamado quando o Publisher fecha o stream
         System.out.println("✅ [" + nome + "] concluiu.");
     }
 }
@@ -268,18 +306,23 @@ package reactive_flow;
 
 import java.util.concurrent.SubmissionPublisher;
 
+// Publisher reativo pronto da JDK: SubmissionPublisher.
+// Permite publicar itens assíncronos e gerencia threads internas.
 public class MessagePublisher {
     private SubmissionPublisher<String> publisher = new SubmissionPublisher<>();
 
+    // Registro de assinantes (observadores)
     public void addSubscriber(MessageSubscriber subscriber) {
         publisher.subscribe(subscriber);
     }
 
+    // Emissão de um novo item no stream
     public void publish(String mensagem) {
         System.out.println("\n📣 Publicando: " + mensagem);
         publisher.submit(mensagem);
     }
 
+    // Indica que não haverá mais itens
     public void close() {
         publisher.close();
     }
@@ -290,6 +333,8 @@ FlowExample.java
 ```java
 package reactive_flow;
 
+// Demonstração: vários subscribers reagem a uma sequência de eventos.
+// Execução é assíncrona; cada subscriber controla seu ritmo via backpressure.
 public class FlowExample {
     public static void main(String[] args) throws InterruptedException {
         MessagePublisher publisher = new MessagePublisher();
@@ -298,41 +343,45 @@ public class FlowExample {
         publisher.addSubscriber(new MessageSubscriber("João"));
         publisher.addSubscriber(new MessageSubscriber("Lucas"));
 
+        // Emite alguns eventos no stream
         publisher.publish("Evento 1 - Novo artigo");
         publisher.publish("Evento 2 - Oferta");
         publisher.publish("Evento 3 - Atualização");
 
+        // Finaliza o stream
         publisher.close();
 
+        // Aguardar processamento assíncrono
         Thread.sleep(500);
         System.out.println("\n🟣 Execução reativa finalizada.");
     }
 }
 ```
 
-Semelhanças com o Observer clássico:
-- Publisher notifica Subscribers quando há novos eventos.
-- Multiplicidade 1→N persiste.
-
-Diferenças:
-- Assíncrono, non-blocking, com backpressure (Subscriber controla ritmo via `request(n)`).
-- Contratos padronizados (Flow.Publisher/Subscriber/Subscription/Processor).
-- Base para programação com streams contínuas (pipelines reativos, transformação, composição).
+Resumo da comparação:
+- Semelhança com Observer: Publisher notifica vários Subscribers.
+- Diferença: modelo reativo padronizado; assíncrono; controle de backpressure; ideal para pipelines reativos (WebFlux, RxJava).
 
 ---
 
 ### 4) Arquiteturas orientadas a eventos (EDA – Observer em nível arquitetural)
 
-Na EDA, o Observer é expandido para o nível de sistema: diferentes módulos (ou microserviços) publicam e reagem a eventos de domínio via um barramento de eventos (Event Bus). É o alicerce de CQRS, Event Sourcing e Serverless Functions.
+Contexto: Na EDA, eventos são “fatos do domínio” que orquestram módulos independentes (até microserviços). Um EventBus registra handlers e distribui eventos. É a base de CQRS, Event Sourcing e serverless.
 
-Exemplos reais: Event Sourcing (Event Store, Axon Framework), CQRS, Serverless (AWS Lambda, GCP Functions), Kafka como backbone de eventos.
+Exemplos: Event Sourcing (Event Store, Axon Framework), CQRS, Serverless (AWS Lambda, GCP Functions), Kafka como backbone.
 
-#### Código (pacote: eda)
+Como se relaciona ao Observer:
+- Semelhança: eventos disparam múltiplas reações independentes.
+- Diferença: nível arquitetural; módulos separados; alto desacoplamento; pode haver persistência de eventos, sagas e orquestrações.
+
+#### Código comentado (pacote: eda)
 
 Event.java
 ```java
 package eda;
 
+// Representa um "fato do domínio" (algo que aconteceu).
+// Em EDA, eventos carregam intenção e contexto do negócio.
 public class Event {
     private String tipo;
     private String dados;
@@ -355,6 +404,8 @@ EventHandler.java
 ```java
 package eda;
 
+// Contrato para "reagentes" a eventos.
+// Cada handler implementa uma ação de negócio disparada por um tipo de evento.
 public interface EventHandler {
     void handle(Event evento);
 }
@@ -366,14 +417,18 @@ package eda;
 
 import java.util.*;
 
+// Barramento de eventos (em memória).
+// Permite registrar handlers por tipo de evento e distribuir publicações.
 public class EventBus {
     private Map<String, List<EventHandler>> handlers = new HashMap<>();
 
+    // Registra um handler para um tipo de evento específico
     public void registrar(String tipoEvento, EventHandler handler) {
         handlers.computeIfAbsent(tipoEvento, e -> new ArrayList<>()).add(handler);
         System.out.println("✅ Handler registrado para: " + tipoEvento);
     }
 
+    // Publica um evento: todos os handlers interessados reagem
     public void publicar(Event evento) {
         System.out.println("\n📢 Publicando evento → " + evento);
         List<EventHandler> lista = handlers.get(evento.getTipo());
@@ -390,21 +445,33 @@ MainEDA.java
 ```java
 package eda;
 
+// Demonstração: diferentes "módulos" (handlers) reagem a eventos de domínio.
+// É a essência da EDA: comunicação por eventos, componentes desacoplados.
 public class MainEDA {
     public static void main(String[] args) {
         EventBus eventBus = new EventBus();
 
+        // Módulo de Notificação
         eventBus.registrar("PedidoCriado", e ->
                 System.out.println("📩 [Notificação] E-mail para cliente do " + e.getDados()));
+
+        // Módulo de Pagamento
         eventBus.registrar("PedidoCriado", e ->
                 System.out.println("💰 [Pagamento] Reservando valor do " + e.getDados()));
+
+        // Módulo de Estoque
         eventBus.registrar("PagamentoConfirmado", e ->
                 System.out.println("🏬 [Estoque] Reduzindo estoque do " + e.getDados()));
+
+        // Módulo de Logística
         eventBus.registrar("PagamentoConfirmado", e ->
                 System.out.println("🚚 [Logística] Separando itens do " + e.getDados()));
+
+        // Módulo de Auditoria
         eventBus.registrar("PedidoCancelado", e ->
                 System.out.println("⚠️ [Auditoria] Pedido cancelado: " + e.getDados()));
 
+        // Eventos de domínio que disparam várias reações
         eventBus.publicar(new Event("PedidoCriado", "pedido#123"));
         eventBus.publicar(new Event("PagamentoConfirmado", "pedido#123"));
         eventBus.publicar(new Event("PedidoCancelado", "pedido#987"));
@@ -412,18 +479,13 @@ public class MainEDA {
 }
 ```
 
-Semelhanças com o Observer clássico:
-- Mesmo princípio de notificação multiassinante: eventos disparam reações em vários handlers.
-- A semântica de “ouvir e reagir a eventos” permanece.
-
-Diferenças:
-- Nível arquitetural: eventos de domínio, múltiplos módulos/serviços.
-- Desacoplamento extremo: produtores e consumidores não se conhecem.
-- Persistência e orquestração possíveis: Event Sourcing, CQRS, Saga, Serverless triggers.
+Resumo da comparação:
+- Semelhança com Observer: múltiplos "observadores" (handlers) reagem a eventos.
+- Diferença: nível de arquitetura; orientação a eventos de domínio; facilita escalabilidade, microserviços, CQRS/Event Sourcing e serverless.
 
 ---
 
-### Diagrama comparativo UML textual — evolução conceitual (Observer → Pub/Sub → Reactive → EDA)
+### Diagrama comparativo UML textual — evolução conceitual
 
 Observer clássico
 ```
@@ -439,9 +501,9 @@ Publish–Subscribe (generalizado via broker)
 Broker "1" o-- "*" Subscriber
 Broker "1" o-- "*" Publisher
 note right of Broker
-  - Mantém tópicos
-  - Distribui mensagens
-  - Desacopla emissores/receptores
+  - Mantém tópicos e assinantes
+  - Distribui mensagens publicadas
+  - Desacopla emissores e receptores (N→N)
 end note
 ```
 
@@ -452,7 +514,7 @@ Flow.Subscriber <--> Flow.Subscription : request(n) / cancel()
 note right
   - Assíncrono, non-blocking
   - Backpressure (controle de fluxo)
-  - Streams contínuas
+  - Streams contínuas e composição
 end note
 ```
 
@@ -464,44 +526,22 @@ Event-Driven Architecture (EDA)
 note right of EventBus
   - Eventos de domínio
   - Módulos independentes
-  - Base para CQRS / Event Sourcing / Serverless
+  - Base para CQRS, Event Sourcing, Serverless
 end note
 ```
 
 ---
 
-### Tabela-resumo (semântica e diferenças principais)
-
-- Observer clássico:
-    - Direto, 1→N, local, síncrono.
-    - Listeners/handlers dentro do processo.
-
-- Publish–Subscribe:
-    - Generaliza o Observer com broker.
-    - N→N, via tópicos/filas, assincronia e distribuição.
-    - Exemplos: JMS, RabbitMQ, Kafka, Google Pub/Sub, AWS SNS/SQS, Azure Event Hub, MQTT.
-
-- Reactive (Flow API):
-    - Observer como base de fluxos assíncronos contínuos com backpressure.
-    - Exemplos: RxJava, Reactor (WebFlux), Akka Streams, Java Flow API, Kotlin Flow.
-
-- EDA:
-    - Observer em nível arquitetural.
-    - Eventos de domínio, múltiplos serviços, alta escalabilidade.
-    - Exemplos: Event Sourcing (Axon), CQRS, Serverless (AWS Lambda, GCP Functions).
-
----
-
 ### Conclusão
 
-Tudo é Observer em diferentes níveis de abstração:
+Tudo é Observer em diferentes camadas:
 
-- Direto (1→N) → Observer clássico
-- Generalizado (N→N) → Pub/Sub (brokers, MQs)
-- Reativo → Rx, Reactor, Flow API
-- Arquitetural → Event Sourcing, CQRS, EDA
+- Direto (1→N): Observer clássico (listeners, handlers locais)
+- Generalizado (N→N): Pub/Sub (brokers e MQs: JMS, Kafka, RabbitMQ, SNS/SQS)
+- Reativo: Flow API, RxJava, Reactor (streams assíncronas com backpressure)
+- Arquitetural: EDA (Event Sourcing, CQRS, Serverless, microserviços)
 
-Ou seja:
+Resumo da jornada:
 Observer → Pub/Sub → Reactive → Event-driven architecture
 
-A raiz conceitual é a mesma: mudanças geram eventos que notificam interessados de forma desacoplada. A diferença está no alcance (local vs. distribuído), no intermediário (broker/event bus), e na natureza do fluxo (pontual vs. contínuo/reativo).
+A raiz conceitual é a mesma (notificação desacoplada). O que muda é o nível (objeto vs. sistema), o intermediário (broker/bus), e a natureza do fluxo (pontual vs. contínuo/reativo).
