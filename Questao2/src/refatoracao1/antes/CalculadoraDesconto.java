@@ -1,12 +1,11 @@
 package refatoracao1.antes;
 
 /**
- * Código ANTES da refatoração - cheio de if/else
- * Problema: Múltiplos condicionais que executam comportamentos diferentes
- * baseados em tipos de cliente. Difícil de manter e estender.
+ * Código ANTES da refatoração - cheio de if/else Problema: Múltiplos condicionais que executam
+ * comportamentos diferentes baseados em tipos de cliente. Difícil de manter e estender.
  */
 public class CalculadoraDesconto {
-    
+
     public double calcular(double valor, String tipoCliente) {
         if (tipoCliente.equals("REGULAR")) {
             return valor; // Sem desconto
@@ -20,7 +19,7 @@ public class CalculadoraDesconto {
             throw new IllegalArgumentException("Tipo de cliente inválido: " + tipoCliente);
         }
     }
-    
+
     public String obterMensagem(String tipoCliente) {
         if (tipoCliente.equals("REGULAR")) {
             return "Cliente regular - sem desconto especial";
@@ -34,7 +33,7 @@ public class CalculadoraDesconto {
             throw new IllegalArgumentException("Tipo de cliente inválido: " + tipoCliente);
         }
     }
-    
+
     public String obterCategoria(String tipoCliente) {
         if (tipoCliente.equals("REGULAR")) {
             return "Básica";

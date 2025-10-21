@@ -7,11 +7,11 @@ import refatoracao1.depois.impl.DescontoPremium;
 import refatoracao1.depois.impl.DescontoFuncionario;
 
 /**
- * Factory para criar as estratégias de desconto
- * Centraliza a criação das estratégias e mantém a flexibilidade
+ * Factory para criar as estratégias de desconto Centraliza a criação das estratégias e mantém a
+ * flexibilidade
  */
 public class EstrategiaDescontoFactory {
-    
+
     public static EstrategiaDesconto criar(String tipoCliente) {
         switch (tipoCliente.toUpperCase()) {
             case "REGULAR":
