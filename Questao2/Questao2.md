@@ -398,5 +398,173 @@ public class CriptografiaDecorator extends RelatorioDecorator {
 
 ---
 
+## 3. Comparação: Decorator Pattern vs Java Streams vs Builder Pattern
+
+### Semelhanças Conceituais
+Embora sejam conceitos diferentes, o **Decorator Pattern**, **Java Streams** e **Builder Pattern** compartilham características interessantes relacionadas à **composição** e **fluência**:
+
+#### 🔗 **Composição de Funcionalidades**
+
+**Decorator Pattern:**
+```java
+// Composição através de decorators aninhados
+Relatorio relatorio = new CriptografiaDecorator(
+    new CompressaoDecorator(
+        new CabecalhoDecorator(
+            new RelatorioBasico(dados)
+        )
+    )
+);
+```
+
+**Java Streams:**
+```java
+// Composição através de operações intermediárias
+List<String> resultado = dados.stream()
+    .filter(item -> item.contains("Produto"))
+    .map(item -> item.toUpperCase())
+    .sorted()
+    .collect(Collectors.toList());
+```
+
+**Builder Pattern:**
+```java
+// Composição através de métodos fluentes
+RelatorioBuilder relatorio = new RelatorioBuilder()
+    .comCabecalho()
+    .comTimestamp()
+    .comCompressao()
+    .comCriptografia()
+    .build();
+```
+
+#### 🎯 **Análise Comparativa**
+
+| Aspecto | Decorator | Streams | Builder |
+|---------|-----------|---------|---------|
+| **Propósito** | Adicionar comportamentos dinamicamente | Processar coleções funcionalmente | Construir objetos complexos |
+| **Composição** | Aninhamento de objetos | Pipeline de operações | Métodos fluentes |
+| **Execução** | Imediata (ao chamar método) | Lazy (apenas no terminal) | Postergada (no build()) |
+| **Reutilização** | Alta (decorators independentes) | Baixa (streams são consumidos) | Média (builder pode ser reutilizado) |
+| **Flexibilidade** | Ordem pode ser alterada | Ordem das operações importa | Ordem flexível dos métodos |
+
+#### 💡 **Implementação de um "Decorator Fluente"**
+
+Podemos combinar os conceitos para criar uma versão fluente do Decorator:
+
+```java
+// Implementação híbrida - Decorator com interface fluente
+public class RelatorioFluenteBuilder {
+    private Relatorio relatorio;
+    
+    public RelatorioFluenteBuilder(List<String> dados) {
+        this.relatorio = new RelatorioBasico(dados);
+    }
+    
+    public RelatorioFluenteBuilder comCabecalho() {
+        this.relatorio = new CabecalhoDecorator(this.relatorio);
+        return this;
+    }
+    
+    public RelatorioFluenteBuilder comRodape() {
+        this.relatorio = new RodapeDecorator(this.relatorio);
+        return this;
+    }
+    
+    public RelatorioFluenteBuilder comTimestamp() {
+        this.relatorio = new TimestampDecorator(this.relatorio);
+        return this;
+    }
+    
+    public RelatorioFluenteBuilder comAssinatura() {
+        this.relatorio = new AssinaturaDecorator(this.relatorio);
+        return this;
+    }
+    
+    public RelatorioFluenteBuilder comCompressao() {
+        this.relatorio = new CompressaoDecorator(this.relatorio);
+        return this;
+    }
+    
+    public RelatorioFluenteBuilder comCriptografia() {
+        this.relatorio = new CriptografiaDecorator(this.relatorio);
+        return this;
+    }
+    
+    public String gerar() {
+        return this.relatorio.gerar();
+    }
+}
+
+// Uso com sintaxe fluente
+String resultado = new RelatorioFluenteBuilder(dados)
+    .comCabecalho()
+    .comTimestamp()
+    .comAssinatura()
+    .comCompressao()
+    .gerar();
+```
+
+#### 🔍 **Diferenças Fundamentais**
+
+**1. Decorator Pattern:**
+- **Objetivo:** Adicionar responsabilidades a objetos existentes
+- **Estrutural:** Composição através de herança/interface
+- **Runtime:** Comportamentos podem ser adicionados/removidos dinamicamente
+- **Uso:** Quando você precisa de funcionalidades opcionais combinadas
+
+**2. Java Streams:**
+- **Objetivo:** Processamento funcional de coleções de dados
+- **Funcional:** Pipeline de transformações sobre dados
+- **Runtime:** Operações lazy avaliadas apenas no terminal
+- **Uso:** Quando você precisa transformar/filtrar coleções
+
+**3. Builder Pattern:**
+- **Objetivo:** Construção de objetos complexos passo a passo
+- **Criacional:** Separação da construção da representação
+- **Runtime:** Configuração flexível antes da criação final
+- **Uso:** Quando você tem objetos com muitos parâmetros opcionais
+
+#### 🎨 **Quando Usar Cada Um**
+
+**Use Decorator quando:**
+- Precisar adicionar funcionalidades a objetos existentes
+- As funcionalidades podem ser combinadas de várias formas
+- Quiser evitar explosão de subclasses
+
+**Use Streams quando:**
+- Estiver processando coleções de dados
+- Precisar de operações como filtro, mapeamento, redução
+- Quiser código mais funcional e legível
+
+**Use Builder quando:**
+- O objeto tem muitos parâmetros de construção
+- Alguns parâmetros são opcionais
+- A ordem de configuração não importa
+
+#### 🔗 **Combinação de Padrões**
+
+É possível combinar esses padrões para soluções mais poderosas:
+
+```java
+// Exemplo: Processamento de relatórios com Streams + Decorator + Builder
+List<RelatorioConfig> configs = Arrays.asList(
+    new RelatorioConfig("vendas", true, false, true),
+    new RelatorioConfig("financeiro", false, true, true)
+);
+
+List<String> relatoriosGerados = configs.stream()
+    .map(config -> new RelatorioFluenteBuilder(config.getDados())
+        .comCabecalho(config.temCabecalho())
+        .comRodape(config.temRodape())
+        .comAssinatura(config.temAssinatura())
+        .gerar())
+    .collect(Collectors.toList());
+```
+
+---
+
 ## Conclusão
 As refatorações do livro "Refactoring to Patterns" demonstram como transformar código problemático em soluções elegantes usando padrões estabelecidos. Ambas as refatorações resultam em código mais limpo, extensível e testável, seguindo princípios SOLID e facilitando a manutenção a longo prazo.
+
+A comparação entre Decorator, Streams e Builder revela que, embora tenham propósitos diferentes, todos compartilham o conceito de **composição fluente** e podem ser combinados para criar soluções ainda mais poderosas e expressivas.
