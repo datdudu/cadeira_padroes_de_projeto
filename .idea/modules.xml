@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Questao1/Questao1.iml" filepath="$PROJECT_DIR$/Questao1/Questao1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Questao2/Questao2.iml" filepath="$PROJECT_DIR$/Questao2/Questao2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Questao4/Questao4.iml" filepath="$PROJECT_DIR$/Questao4/Questao4.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/cadeira_padroes_de_projeto.iml" filepath="$PROJECT_DIR$/.idea/cadeira_padroes_de_projeto.iml" />
     </modules>
   </component>
