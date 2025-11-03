@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Replace Conditional with Polymorphism → Strategy</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;family=Roboto+Mono:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 50px 60px;
+      }
+      .slide-header {
+        margin-bottom: 20px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 10px 0;
+        line-height: 1.2;
+      }
+      .problem-description {
+        margin-bottom: 25px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #f18f01;
+      }
+      .problem-description p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .comparison-container {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+      }
+      .code-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .code-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        align-items: center;
+      }
+      .before-header {
+        background-color: rgba(199, 62, 29, 0.3);
+      }
+      .after-header {
+        background-color: rgba(39, 201, 63, 0.2);
+      }
+      .code-label {
+        font-family: "Montserrat", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .before-label {
+        color: #ff5f56;
+      }
+      .after-label {
+        color: #27c93f;
+      }
+      .code-dots {
+        display: flex;
+      }
+      .code-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-left: 6px;
+      }
+      .dot-red {
+        background-color: #ff5f56;
+      }
+      .dot-yellow {
+        background-color: #ffbd2e;
+      }
+      .dot-green {
+        background-color: #27c93f;
+      }
+      .code-content {
+        flex: 1;
+        padding: 15px;
+      }
+      pre {
+        margin: 0;
+        background-color: #1e2f45;
+        border-radius: 6px;
+        padding: 15px;
+        overflow: auto;
+        height: calc(100% - 30px);
+        font-family: "Roboto Mono", monospace;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      code {
+        font-family: "Roboto Mono", monospace;
+      }
+      .code-keyword {
+        color: #c792ea;
+      }
+      .code-type {
+        color: #ffcb6b;
+      }
+      .code-method {
+        color: #82aaff;
+      }
+      .code-comment {
+        color: #546e7a;
+      }
+      .code-string {
+        color: #c3e88d;
+      }
+      .footer {
+        text-align: right;
+        padding: 15px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Replace Conditional with Polymorphism → Strategy
+          </h1>
+        </div>
+        <div class="problem-description">
+          <p>
+            <strong>Problema:</strong> Quando temos uma classe com muitos
+            condicionais que executam comportamentos diferentes baseados em
+            tipos ou estados, o código se torna difícil de manter e estender
+          </p>
+        </div>
+        <div class="comparison-container">
+          <div class="code-column">
+            <div class="code-header before-header">
+              <div class="code-label before-label">ANTES</div>
+              <div class="code-dots">
+                <div class="code-dot dot-red"></div>
+                <div class="code-dot dot-yellow"></div>
+                <div class="code-dot dot-green"></div>
+              </div>
+            </div>
+            <div class="code-content">
+              <pre><code><span class="code-keyword">if</span> (tipo.equals(<span class="code-string">"VIP"</span>)) {
+    <span class="code-keyword">return</span> valor * 0.9; <span class="code-comment">// 10% desconto</span>
+} <span class="code-keyword">else if</span> (tipo.equals(<span class="code-string">"PREMIUM"</span>)) {
+    <span class="code-keyword">return</span> valor * 0.8; <span class="code-comment">// 20% desconto</span>
+}
+
+<span class="code-comment">// Problemas:
+// 1. Lógica espalhada
+// 2. Difícil manutenção
+// 3. Alto acoplamento
+// 4. Difícil de testar</span></code></pre>
+            </div>
+          </div>
+          <div class="code-column">
+            <div class="code-header after-header">
+              <div class="code-label after-label">DEPOIS</div>
+              <div class="code-dots">
+                <div class="code-dot dot-red"></div>
+                <div class="code-dot dot-yellow"></div>
+                <div class="code-dot dot-green"></div>
+              </div>
+            </div>
+            <div class="code-content">
+              <pre><code><span class="code-keyword">public</span> <span class="code-keyword">interface</span> <span class="code-type">EstrategiaDesconto</span> {
+    <span class="code-keyword">double</span> <span class="code-method">calcular</span>(<span class="code-keyword">double</span> valor);
+}
+
+<span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">DescontoVIP</span> <span class="code-keyword">implements</span> <span class="code-type">EstrategiaDesconto</span> {
+    <span class="code-keyword">public</span> <span class="code-keyword">double</span> <span class="code-method">calcular</span>(<span class="code-keyword">double</span> valor) {
+        <span class="code-keyword">return</span> valor * 0.9;
+    }
+}
+
+<span class="code-comment">// Vantagens:
+// 1. Extensível (OCP)
+// 2. Isolado e testável
+// 3. Baixo acoplamento</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Padrões de Projeto • Strategy Pattern</p>
+      </div>
+    </div>
+  </body>
+</html>

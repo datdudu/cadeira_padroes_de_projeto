@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Síntese das 4 Questões - Evolução dos Padrões</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 50px 60px;
+      }
+      .slide-header {
+        margin-bottom: 20px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 10px 0;
+        line-height: 1.2;
+      }
+      .lessons-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
+      }
+      .lessons-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0 0 15px 0;
+      }
+      .lesson-item {
+        display: flex;
+        align-items: flex-start;
+        margin: 12px 0;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 12px 15px;
+      }
+      .lesson-icon {
+        font-size: 24px;
+        margin-right: 15px;
+        width: 30px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .icon-1 {
+        color: #2e86ab;
+      }
+      .icon-2 {
+        color: #f18f01;
+      }
+      .icon-3 {
+        color: #a23b72;
+      }
+      .icon-4 {
+        color: #c73e1d;
+      }
+      .lesson-text {
+        flex: 1;
+      }
+      .lesson-text p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.4;
+      }
+      .lesson-text p strong {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+      }
+      .timeline-container {
+        margin-top: 20px;
+        flex: 1;
+        position: relative;
+      }
+      .timeline-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0 0 15px 0;
+      }
+      .timeline {
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 30px 20px 20px;
+      }
+      .timeline-years {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        padding-bottom: 15px;
+      }
+      .timeline-years:after {
+        content: "";
+        position: absolute;
+        height: 4px;
+        background-color: rgba(255, 255, 255, 0.3);
+        left: 0;
+        right: 0;
+        top: 20px;
+        z-index: 1;
+      }
+      .year-marker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+      .year-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #2e86ab;
+        margin-bottom: 10px;
+      }
+      .year-label p {
+        font-weight: 500;
+        margin: 0;
+        font-size: 18px;
+      }
+      .year-detail p {
+        margin: 5px 0 0 0;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .patterns-evolution {
+        margin-top: 30px;
+        position: relative;
+      }
+      .patterns-evolution:before {
+        content: "";
+        position: absolute;
+        height: 4px;
+        background-color: rgba(255, 255, 255, 0.15);
+        left: 0;
+        right: 0;
+        top: 25px;
+      }
+      .pattern-steps {
+        display: flex;
+        justify-content: space-between;
+      }
+      .pattern-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        max-width: 180px;
+      }
+      .pattern-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #f18f01;
+        margin-bottom: 15px;
+      }
+      .pattern-name p {
+        font-weight: 500;
+        margin: 0;
+        font-size: 16px;
+      }
+      .footer {
+        text-align: right;
+        padding: 20px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Síntese das 4 Questões - Evolução dos Padrões
+          </h1>
+        </div>
+        <div class="lessons-container">
+          <h3 class="lessons-title">Principais Lições:</h3>
+          <div class="lesson-item">
+            <div class="lesson-icon icon-1">🗃️</div>
+            <div class="lesson-text">
+              <p>
+                <strong>Persistência:</strong> Repository &gt; Data Mapper &gt;
+                DAO (agregados e invariantes)
+              </p>
+            </div>
+          </div>
+          <div class="lesson-item">
+            <div class="lesson-icon icon-2">🔄</div>
+            <div class="lesson-text">
+              <p>
+                <strong>Refatoração:</strong> Strategy elimina if/else,
+                Decorator compõe funcionalidades
+              </p>
+            </div>
+          </div>
+          <div class="lesson-item">
+            <div class="lesson-icon icon-3">💉</div>
+            <div class="lesson-text">
+              <p>
+                <strong>Evolução:</strong> DI substituiu Singleton/Factory
+                (testável, flexível)
+              </p>
+            </div>
+          </div>
+          <div class="lesson-item">
+            <div class="lesson-icon icon-4">👁️</div>
+            <div class="lesson-text">
+              <p>
+                <strong>Observer:</strong> Do local ao distribuído (Clássico →
+                Pub/Sub → Reactive → EDA)
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-container">
+          <h3 class="timeline-title">Timeline Evolutiva:</h3>
+          <div class="timeline">
+            <div class="timeline-years">
+              <div class="year-marker">
+                <div class="year-dot"></div>
+                <div class="year-label">
+                  <p>1994</p>
+                </div>
+                <div class="year-detail">
+                  <p>Gang of Four</p>
+                </div>
+              </div>
+              <div class="year-marker">
+                <div class="year-dot"></div>
+                <div class="year-label">
+                  <p>2004</p>
+                </div>
+                <div class="year-detail">
+                  <p>Refactoring to Patterns</p>
+                </div>
+              </div>
+              <div class="year-marker">
+                <div class="year-dot"></div>
+                <div class="year-label">
+                  <p>2014</p>
+                </div>
+                <div class="year-detail">
+                  <p>DI + Reactive</p>
+                </div>
+              </div>
+              <div class="year-marker">
+                <div class="year-dot"></div>
+                <div class="year-label">
+                  <p>2024</p>
+                </div>
+                <div class="year-detail">
+                  <p>Event-Driven</p>
+                </div>
+              </div>
+            </div>
+            <div class="patterns-evolution">
+              <div class="pattern-steps">
+                <div class="pattern-step">
+                  <div class="pattern-dot"></div>
+                  <div class="pattern-name">
+                    <p>Observer</p>
+                  </div>
+                </div>
+                <div class="pattern-step">
+                  <div class="pattern-dot"></div>
+                  <div class="pattern-name">
+                    <p>Pub/Sub</p>
+                  </div>
+                </div>
+                <div class="pattern-step">
+                  <div class="pattern-dot"></div>
+                  <div class="pattern-name">
+                    <p>Reactive Streams</p>
+                  </div>
+                </div>
+                <div class="pattern-step">
+                  <div class="pattern-dot"></div>
+                  <div class="pattern-name">
+                    <p>Event-Driven</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Padrões de Projeto • Síntese Final</p>
+      </div>
+    </div>
+  </body>
+</html>

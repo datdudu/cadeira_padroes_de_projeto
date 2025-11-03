@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Padrões de Projeto - Questão 2</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        max-width: 100%; width: 100vw;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 40px 50px;
+      }
+      .slide-header {
+        margin-bottom: 20px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 15px 0;
+        line-height: 1.1;
+      }
+      .slide-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+      }
+      .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-top: 15px;
+      }
+      .big-icon {
+        font-size: 60px;
+        color: rgba(46, 134, 171, 0.15);
+        position: absolute;
+        right: 80px;
+        top: 80px;
+        z-index: 0;
+      }
+      .content-item {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        z-index: 1;
+        position: relative;
+      }
+      .content-item-icon {
+        font-size: 20px;
+        margin-right: 20px;
+        width: 32px;
+        text-align: center;
+        color: #2e86ab;
+      }
+      .content-item-text {
+        flex: 1;
+      }
+      .content-item-text p {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.3;
+      }
+      .content-item-text p strong {
+        color: #f18f01;
+        font-weight: 500;
+      }
+      .refactoring-container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: 40px 0 20px 0;
+      }
+      .refactoring-box {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 0 10px;
+        border-left: 4px solid #a23b72;
+      }
+      .refactoring-box h3 {
+        margin: 0 0 15px 0;
+        font-size: 15px;
+        color: #a23b72;
+        font-family: "Montserrat", sans-serif;
+      }
+      .refactoring-box p {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Questão 2 - Refatorações do Livro 'Refactoring to Patterns'
+          </h1>
+        </div>
+        <div class="big-icon"></div>
+        <div class="content-container">
+          <div class="content-item">
+            <div class="content-item-icon"></div>
+            <div class="content-item-text">
+              <p><strong>Autor:</strong> Joshua Kerievsky (2004)</p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon"></div>
+            <div class="content-item-text">
+              <p>
+                <strong>Objetivo:</strong> Transformar código legado em padrões
+                limpos
+              </p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon"></div>
+            <div class="content-item-text">
+              <p><strong>Duas refatorações principais:</strong></p>
+            </div>
+          </div>
+          <div class="refactoring-container">
+            <div class="refactoring-box">
+              <h3>1. Replace Conditional with Polymorphism</h3>
+              <p>Substituir condicionais por polimorfismo</p>
+              <p>→ <strong>Strategy Pattern</strong></p>
+            </div>
+            <div class="refactoring-box">
+              <h3>2. Move Embellishment to Decorator</h3>
+              <p>Mover "enfeites" para decorador</p>
+              <p>→ <strong>Decorator Pattern</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

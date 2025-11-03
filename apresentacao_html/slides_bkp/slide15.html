@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Por que Dependency Injection Venceu?</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 60px;
+      }
+      .slide-header {
+        margin-bottom: 30px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+      }
+      .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-top: 20px;
+      }
+      .content-section {
+        margin-bottom: 40px;
+      }
+      .section-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 28px;
+        font-weight: 600;
+        color: #a23b72;
+        margin: 0 0 25px 0;
+      }
+      .content-item {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        z-index: 1;
+        position: relative;
+      }
+      .content-item-icon {
+        font-size: 24px;
+        margin-right: 20px;
+        width: 32px;
+        text-align: center;
+        color: #2e86ab;
+      }
+      .content-item-text {
+        flex: 1;
+      }
+      .content-item-text p {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.5;
+      }
+      .content-item-text p strong {
+        color: #f18f01;
+        font-weight: 500;
+      }
+      .frameworks-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+      }
+      .framework-column {
+        flex: 1;
+        padding: 0 15px;
+        border-left: 2px solid rgba(46, 134, 171, 0.3);
+      }
+      .framework-column:first-child {
+        border-left: none;
+        padding-left: 0;
+      }
+      .framework-language {
+        font-size: 22px;
+        font-weight: 600;
+        color: #a23b72;
+        margin-bottom: 10px;
+      }
+      .framework-list p {
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 8px 0;
+      }
+      .footer {
+        text-align: right;
+        padding: 20px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">Por que Dependency Injection Venceu?</h1>
+        </div>
+        <div class="content-container">
+          <div class="content-section">
+            <div class="content-item">
+              <div class="content-item-icon">🧪</div>
+              <div class="content-item-text">
+                <p><strong>Testabilidade</strong> — Fácil injeção de mocks</p>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="content-item-icon">🔧</div>
+              <div class="content-item-text">
+                <p><strong>Flexibilidade</strong> — Configuração externa</p>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="content-item-icon">🏗️</div>
+              <div class="content-item-text">
+                <p><strong>Frameworks</strong> — Spring, CDI, Guice</p>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="content-item-icon">📝</div>
+              <div class="content-item-text">
+                <p><strong>Simplicidade</strong> — Menos código boilerplate</p>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="content-item-icon">🔗</div>
+              <div class="content-item-text">
+                <p>
+                  <strong>Baixo Acoplamento</strong> — Inversão de dependências
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="content-section">
+            <h2 class="section-title">Frameworks que substituíram GOF:</h2>
+            <div class="frameworks-container">
+              <div class="framework-column">
+                <div class="framework-language">Java</div>
+                <div class="framework-list">
+                  <p>Spring Framework</p>
+                  <p>CDI (Contexts &amp; Dependency Injection)</p>
+                  <p>Google Guice</p>
+                </div>
+              </div>
+              <div class="framework-column">
+                <div class="framework-language">C#</div>
+                <div class="framework-list">
+                  <p>.NET Core DI</p>
+                  <p>Autofac</p>
+                  <p>Unity</p>
+                </div>
+              </div>
+              <div class="framework-column">
+                <div class="framework-language">Python</div>
+                <div class="framework-list">
+                  <p>Django DI</p>
+                  <p>FastAPI Dependency System</p>
+                  <p>Injector</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Padrões de Projeto • Questão 3 - DI vs GOF</p>
+      </div>
+    </div>
+  </body>
+</html>

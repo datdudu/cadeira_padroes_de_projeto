@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padrões de Projeto - Apresentação Completa</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/black.css">
+    
+    <style>
+        /* Reset para apresentação */
+        .reveal {
+            background: #0a2540;
+        }
+        
+        .reveal .slides {
+            text-align: left;
+        }
+        
+        .reveal .slides section {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        /* Container para cada slide */
+        .slide-wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0a2540;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Iframe otimizado */
+        .slide-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow: hidden;
+            transform: scale(0.95);
+            transform-origin: center center;
+        }
+        
+        /* Controles customizados */
+        .reveal .controls {
+            color: #2E86AB;
+            right: 20px;
+            bottom: 20px;
+        }
+        
+        .reveal .progress {
+            color: #2E86AB;
+            height: 4px;
+        }
+        
+        .reveal .controls .controls-arrow {
+            border-color: #2E86AB;
+        }
+        
+        /* Indicador de slide */
+        .slide-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(46, 134, 171, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        /* Loader */
+        .slide-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #2E86AB;
+            font-size: 18px;
+        }
+        
+        /* Esconder scrollbar */
+        .slide-iframe::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .slide-counter {
+                top: 10px;
+                right: 10px;
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            
+            .slide-iframe {
+                transform: scale(0.85);
+            }
+        }
+        
+        @media (min-width: 1400px) {
+            .slide-iframe {
+                transform: scale(1.0);
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .slide-iframe {
+                transform: scale(0.90);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contador de slides -->
+    <div class="slide-counter" id="slideCounter">
+        Slide 1 / 21
+    </div>
+    
+    <div class="reveal">
+        <div class="slides" id="slidesContainer">
+            <!-- Os slides serão carregados aqui dinamicamente -->
+        </div>
+    </div>
+
+    <!-- Reveal.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+    
+    <script>
+        // Lista de todos os slides
+        const slideFiles = [
+            'slide1.html',   'slide2.html',   'slide3.html',   'slide4.html',   'slide5.html',
+            'slide6.html',   'slide7.html',   'slide8.html',   'slide9.html',   'slide10.html',
+            'slide11.html',  'slide12.html',  'slide13.html',  'slide14.html',  'slide15.html',
+            'slide16.html',  'slide17.html',  'slide18.html',  'slide19.html',  'slide20.html',
+            'slide21.html'
+        ];
+        
+        // Função para carregar slides dinamicamente
+        async function loadSlides() {
+            const container = document.getElementById('slidesContainer');
+            
+            slideFiles.forEach((slideFile, index) => {
+                // Criar seção do Reveal.js
+                const section = document.createElement('section');
+                section.setAttribute('data-slide-number', index + 1);
+                
+                // Criar wrapper do slide
+                const wrapper = document.createElement('div');
+                wrapper.className = 'slide-wrapper';
+                
+                // Criar iframe para o slide
+                const iframe = document.createElement('iframe');
+                iframe.className = 'slide-iframe';
+                iframe.src = `slides/${slideFile}`;
+                iframe.scrolling = 'no';
+                iframe.seamless = true;
+                
+                // Loader enquanto carrega
+                const loader = document.createElement('div');
+                loader.className = 'slide-loader';
+                loader.innerHTML = '🔄 Carregando slide...';
+                
+                // Evento de carregamento
+                iframe.onload = function() {
+                    loader.style.display = 'none';
+                    
+                    // Ajustar o iframe para remover scrollbars e melhorar o fit
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        if (iframeDoc) {
+                            iframeDoc.body.style.overflow = 'hidden';
+                            iframeDoc.documentElement.style.overflow = 'hidden';
+                            iframeDoc.body.style.margin = '0';
+                            iframeDoc.body.style.padding = '0';
+                            
+                            // Aplicar zoom se necessário
+                            const slideContainer = iframeDoc.querySelector('.slide-container');
+                            if (slideContainer) {
+                                slideContainer.style.transform = 'scale(0.98)';
+                                slideContainer.style.transformOrigin = 'center center';
+                            }
+                        }
+                    } catch (e) {
+                        console.log('Não foi possível acessar o conteúdo do iframe para o slide:', slideFile);
+                    }
+                };
+                
+                iframe.onerror = function() {
+                    loader.innerHTML = '❌ Erro ao carregar slide';
+                };
+                
+                // Montar estrutura
+                wrapper.appendChild(loader);
+                wrapper.appendChild(iframe);
+                section.appendChild(wrapper);
+                container.appendChild(section);
+            });
+        }
+        
+        // Função para atualizar contador
+        function updateSlideCounter() {
+            const counter = document.getElementById('slideCounter');
+            const currentSlide = Reveal.getIndices().h + 1;
+            const totalSlides = slideFiles.length;
+            counter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+        }
+        
+        // Função para ajustar zoom automaticamente
+        function adjustSlideScale() {
+            const iframes = document.querySelectorAll('.slide-iframe');
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            let scale = 0.95;
+            
+            // Calcular escala baseada no viewport
+            if (viewportWidth < 1200) {
+                scale = 0.85;
+            } else if (viewportWidth < 1400) {
+                scale = 0.90;
+            } else if (viewportWidth >= 1600) {
+                scale = 1.0;
+            }
+            
+            // Ajustar altura também
+            if (viewportHeight < 700) {
+                scale *= 0.90;
+            }
+            
+            iframes.forEach(iframe => {
+                iframe.style.transform = `scale(${scale})`;
+            });
+            
+            console.log(`📏 Escala ajustada para: ${scale} (viewport: ${viewportWidth}x${viewportHeight})`);
+        }
+        
+        // Carregar slides e inicializar Reveal.js
+        async function initPresentation() {
+            await loadSlides();
+            
+            // Configurar Reveal.js
+            Reveal.initialize({
+                // Layout
+                width: 1280,
+                height: 720,
+                margin: 0.02,
+                minScale: 0.1,
+                maxScale: 1.2,
+                
+                // Navegação
+                controls: true,
+                controlsTutorial: false,
+                controlsLayout: 'bottom-right',
+                progress: true,
+                center: true,
+                hash: true,
+                overview: true,
+                
+                // Transições
+                transition: 'slide',
+                transitionSpeed: 'default',
+                backgroundTransition: 'fade',
+                
+                // Configurações de teclado
+                keyboard: {
+                    70: function() { // F para fullscreen
+                        toggleFullscreen();
+                    },
+                    27: function() { // ESC para sair do fullscreen
+                        if (document.fullscreenElement) {
+                            document.exitFullscreen();
+                        }
+                    }
+                },
+                
+                // Eventos
+                ready: function() {
+                    updateSlideCounter();
+                    adjustSlideScale(); // Ajustar escala inicial
+                    console.log('📊 Apresentação carregada com', slideFiles.length, 'slides');
+                }
+            });
+            
+            // Event listeners
+            Reveal.on('slidechanged', function(event) {
+                updateSlideCounter();
+                console.log(`📄 Slide atual: ${event.indexh + 1}/${slideFiles.length}`);
+            });
+            
+            // Ajustar escala quando redimensionar
+            window.addEventListener('resize', function() {
+                setTimeout(adjustSlideScale, 100);
+                Reveal.layout();
+            });
+        }
+        
+        // Função para tela cheia
+        function toggleFullscreen() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log('Erro ao entrar em tela cheia:', err);
+                });
+            }
+        }
+        
+        // Controles adicionais de teclado
+        document.addEventListener('keydown', function(event) {
+            switch(event.key) {
+                case 'f':
+                case 'F':
+                    event.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'Home':
+                    event.preventDefault();
+                    Reveal.slide(0);
+                    break;
+                case 'End':
+                    event.preventDefault();
+                    Reveal.slide(slideFiles.length - 1);
+                    break;
+                case '?':
+                    event.preventDefault();
+                    showHelp();
+                    break;
+            }
+        });
+        
+        // Função de ajuda
+        function showHelp() {
+            alert(`🎮 CONTROLES DA APRESENTAÇÃO:
+            
+⌨️ NAVEGAÇÃO:
+→ / Espaço: Próximo slide
+← / Backspace: Slide anterior
+Home: Primeiro slide
+End: Último slide
+
+🖥️ VISUALIZAÇÃO:
+F: Tela cheia / Sair da tela cheia
+ESC: Sair da tela cheia
+O: Visão geral (overview)
+
+📊 TOTAL: ${slideFiles.length} slides carregados`);
+        }
+        
+        // Event listener para fullscreen
+        document.addEventListener('fullscreenchange', function() {
+            const counter = document.getElementById('slideCounter');
+            if (document.fullscreenElement) {
+                counter.style.top = '10px';
+                counter.style.right = '10px';
+            } else {
+                counter.style.top = '20px';
+                counter.style.right = '20px';
+            }
+        });
+        
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', initPresentation);
+        
+        // Mostrar ajuda automaticamente após 3 segundos
+        setTimeout(() => {
+            console.log('💡 Dica: Pressione "?" para ver todos os controles disponíveis');
+        }, 3000);
+    </script>
+</body>
+</html>

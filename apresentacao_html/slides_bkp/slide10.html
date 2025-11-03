@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Semelhanças: Decorator vs Java Streams vs Builder</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;family=Roboto+Mono:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 50px 60px;
+      }
+      .slide-header {
+        margin-bottom: 20px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 10px 0;
+        line-height: 1.2;
+      }
+      .concept-container {
+        margin-bottom: 30px;
+      }
+      .concept-item {
+        display: flex;
+        align-items: flex-start;
+        margin: 15px 0;
+      }
+      .concept-icon {
+        font-size: 22px;
+        margin-right: 15px;
+        width: 25px;
+        text-align: center;
+        color: #f18f01;
+        flex-shrink: 0;
+        margin-top: 3px;
+      }
+      .concept-text {
+        flex: 1;
+      }
+      .concept-text p {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.5;
+      }
+      .concept-text p strong {
+        color: #a23b72;
+        font-weight: 500;
+      }
+      .comparison-container {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .comparison-item {
+        flex: 1;
+        margin: 0 10px;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        text-align: center;
+      }
+      .comparison-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+        color: #a23b72;
+      }
+      .comparison-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #2e86ab;
+      }
+      .comparison-desc {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .code-container {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+      .code-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .code-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .code-dots {
+        display: flex;
+      }
+      .code-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-left: 6px;
+      }
+      .dot-red {
+        background-color: #ff5f56;
+      }
+      .dot-yellow {
+        background-color: #ffbd2e;
+      }
+      .dot-green {
+        background-color: #27c93f;
+      }
+      pre {
+        margin: 0;
+        background-color: #1e2f45;
+        border-radius: 6px;
+        padding: 20px;
+        overflow: auto;
+        max-height: 100%;
+        font-family: "Roboto Mono", monospace;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      code {
+        font-family: "Roboto Mono", monospace;
+      }
+      .code-keyword {
+        color: #c792ea;
+      }
+      .code-type {
+        color: #ffcb6b;
+      }
+      .code-method {
+        color: #82aaff;
+      }
+      .code-comment {
+        color: #546e7a;
+      }
+      .code-string {
+        color: #c3e88d;
+      }
+      .footer {
+        text-align: right;
+        padding: 20px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Semelhanças: Decorator vs Java Streams vs Builder
+          </h1>
+        </div>
+        <div class="concept-container">
+          <div class="concept-item">
+            <div class="concept-icon">🔄</div>
+            <div class="concept-text">
+              <p><strong>Conceito comum:</strong> Composição fluente</p>
+            </div>
+          </div>
+        </div>
+        <div class="comparison-container">
+          <div class="comparison-item">
+            <div class="comparison-icon">🧩</div>
+            <div class="comparison-title">Decorator</div>
+            <div class="comparison-desc"><p>Aninhamento de objetos</p></div>
+          </div>
+          <div class="comparison-item">
+            <div class="comparison-icon">🌊</div>
+            <div class="comparison-title">Streams</div>
+            <div class="comparison-desc"><p>Pipeline de operações</p></div>
+          </div>
+          <div class="comparison-item">
+            <div class="comparison-icon">🏗️</div>
+            <div class="comparison-title">Builder</div>
+            <div class="comparison-desc"><p>Métodos fluentes</p></div>
+          </div>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <div class="code-title">RelatorioFluenteBuilder.java</div>
+            <div class="code-dots">
+              <div class="code-dot dot-red"></div>
+              <div class="code-dot dot-yellow"></div>
+              <div class="code-dot dot-green"></div>
+            </div>
+          </div>
+          <pre><code><span class="code-comment">// Decorator Fluente</span>
+<span class="code-keyword">new</span> <span class="code-type">RelatorioFluenteBuilder</span>(dados)
+    .<span class="code-method">comCabecalho</span>()
+    .<span class="code-method">comTimestamp</span>()
+    .<span class="code-method">comCriptografia</span>()
+    .<span class="code-method">gerar</span>();</code></pre>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Padrões de Projeto • Comparação de Padrões Fluentes</p>
+      </div>
+    </div>
+  </body>
+</html>

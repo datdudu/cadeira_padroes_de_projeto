@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Padrões Criacionais Criticados</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 60px;
+      }
+      .slide-header {
+        margin-bottom: 30px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+      }
+      .slide-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+      }
+      .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-top: 20px;
+      }
+      .big-icon {
+        font-size: 72px;
+        color: rgba(46, 134, 171, 0.15);
+        position: absolute;
+        right: 80px;
+        top: 80px;
+        z-index: 0;
+      }
+      .content-item {
+        display: flex;
+        align-items: flex-start;
+        margin: 20px 0;
+        z-index: 1;
+        position: relative;
+      }
+      .content-item-icon {
+        font-size: 24px;
+        margin-right: 20px;
+        width: 32px;
+        text-align: center;
+        color: #f18f01;
+        margin-top: 5px;
+      }
+      .content-item-text {
+        flex: 1;
+      }
+      .content-item-text p {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.5;
+      }
+      .content-item-text p strong {
+        color: #a23b72;
+        font-weight: 500;
+      }
+      .problem-tag {
+        display: inline-block;
+        background-color: rgba(199, 62, 29, 0.2);
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin-right: 8px;
+        font-size: 18px;
+        margin-top: 8px;
+      }
+      .conclusion-box {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-left: 4px solid #a23b72;
+        padding: 15px 20px;
+        margin-top: 30px;
+        border-radius: 0 8px 8px 0;
+      }
+      .conclusion-box p {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.4;
+        font-style: italic;
+      }
+      .footer {
+        text-align: right;
+        padding: 20px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">Padrões Criacionais Criticados</h1>
+        </div>
+        <div class="big-icon">💭</div>
+        <div class="content-container">
+          <div class="content-item">
+            <div class="content-item-icon">🔒</div>
+            <div class="content-item-text">
+              <p>
+                <strong>Singleton:</strong> Padrão mais criticado nos últimos
+                anos
+              </p>
+              <div>
+                <span class="problem-tag">Global State</span>
+                <span class="problem-tag">Testabilidade Impossível</span>
+                <span class="problem-tag">Acoplamento Alto</span>
+              </div>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">🏭</div>
+            <div class="content-item-text">
+              <p>
+                <strong>Abstract Factory:</strong> Complexidade desnecessária em
+                muitos casos
+              </p>
+              <div>
+                <span class="problem-tag">Verbosidade Excessiva</span>
+                <span class="problem-tag">Overengineering</span>
+                <span class="problem-tag">Difícil Manutenção</span>
+              </div>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">🧬</div>
+            <div class="content-item-text">
+              <p>
+                <strong>Prototype:</strong> Alternativas mais simples e eficazes
+                surgiram
+              </p>
+              <div>
+                <span class="problem-tag">Clone() Pouco Prático</span>
+                <span class="problem-tag">Deep/Shallow Copy</span>
+                <span class="problem-tag">Erro-propenso</span>
+              </div>
+            </div>
+          </div>
+          <div class="conclusion-box">
+            <p>
+              "Alguns padrões foram absorvidos por linguagens modernas, outros
+              são considerados overengineering em contextos atuais de
+              desenvolvimento"
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Padrões de Projeto • Questão 3: Declínio GOF vs Ascensão DI</p>
+      </div>
+    </div>
+  </body>
+</html>

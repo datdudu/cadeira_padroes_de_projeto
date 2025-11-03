@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Padrões de Projeto: Das Questões Teóricas à Aplicação Prática</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 60px;
+      }
+      .slide-header {
+        margin-bottom: 40px;
+        text-align: center;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 46px;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 10px 0;
+        line-height: 1.2;
+      }
+      .slide-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-size: 24px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 20px 0 0 0;
+      }
+      .agenda-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 900px;
+        margin: 20px auto;
+      }
+      .agenda-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 32px;
+        font-weight: 600;
+        color: #2e86ab;
+        margin: 10px 0 30px 0;
+        text-align: center;
+      }
+      .agenda-item {
+        display: flex;
+        align-items: center;
+        margin: 18px 0;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      .agenda-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .agenda-icon {
+        font-size: 32px;
+        margin-right: 20px;
+        width: 50px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .agenda-text {
+        flex: 1;
+      }
+      .agenda-text p {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.4;
+      }
+      .agenda-text p strong {
+        color: #2e86ab;
+        font-weight: 500;
+      }
+      .icon-1 {
+        color: #2e86ab;
+      }
+      .icon-2 {
+        color: #f18f01;
+      }
+      .icon-3 {
+        color: #a23b72;
+      }
+      .icon-4 {
+        color: #c73e1d;
+      }
+      .footer {
+        text-align: right;
+        padding: 20px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Padrões de Projeto: Das Questões Teóricas à Aplicação Prática
+          </h1>
+          <h2 class="slide-subtitle">Engenharia de Software - 2024</h2>
+        </div>
+        <div class="agenda-container">
+          <h3 class="agenda-title">AGENDA</h3>
+          <div class="agenda-item">
+            <div class="agenda-icon icon-1">🗃️</div>
+            <div class="agenda-text">
+              <p>
+                <strong>Questão 1:</strong> Padrões de Persistência (DAO, Data
+                Mapper, Repository)
+              </p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <div class="agenda-icon icon-2">🔄</div>
+            <div class="agenda-text">
+              <p>
+                <strong>Questão 2:</strong> Refatorações (Strategy e Decorator)
+              </p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <div class="agenda-icon icon-3">💉</div>
+            <div class="agenda-text">
+              <p><strong>Questão 3:</strong> Declínio GOF vs Ascensão DI</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <div class="agenda-icon icon-4">👁️</div>
+            <div class="agenda-text">
+              <p><strong>Questão 4:</strong> Observer Onipresente</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Seu Nome • Disciplina de Padrões de Projeto</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Padrões de Projeto - Questão 1</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #0a2540;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", sans-serif;
+      }
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 60px;
+      }
+      .slide-header {
+        margin-bottom: 30px;
+      }
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #2e86ab;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+      }
+      .slide-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+      }
+      .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-top: 20px;
+      }
+      .big-icon {
+        font-size: 72px;
+        color: rgba(46, 134, 171, 0.15);
+        position: absolute;
+        right: 80px;
+        top: 80px;
+        z-index: 0;
+      }
+      .content-item {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        z-index: 1;
+        position: relative;
+      }
+      .content-item-icon {
+        font-size: 24px;
+        margin-right: 20px;
+        width: 32px;
+        text-align: center;
+        color: #2e86ab;
+      }
+      .content-item-text {
+        flex: 1;
+      }
+      .content-item-text p {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.5;
+      }
+      .content-item-text p strong {
+        color: #f18f01;
+        font-weight: 500;
+      }
+      .evolution-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 40px 0 20px 0;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 8px;
+      }
+      .evolution-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .evolution-step p {
+        margin: 10px 0 0 0;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      .evolution-arrow {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 30px;
+      }
+      .footer {
+        text-align: right;
+        padding: 20px 60px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="slide-content">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Questão 1 - Em relação aos padrões de persistência: DAO, Data Mapper
+            e Repository
+          </h1>
+          <h2 class="slide-subtitle">Compare-os no nível conceitual</h2>
+        </div>
+        <div class="big-icon">🗃️</div>
+        <div class="content-container">
+          <div class="content-item">
+            <div class="content-item-icon">🎯</div>
+            <div class="content-item-text">
+              <p>
+                <strong>Objetivo:</strong> Separar lógica de negócio da
+                persistência de dados
+              </p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">📝</div>
+            <div class="content-item-text">
+              <p>
+                Todos buscam abstrair o acesso a dados das regras de negócio
+              </p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">🔍</div>
+            <div class="content-item-text">
+              <p>Diferem em complexidade e responsabilidades</p>
+            </div>
+          </div>
+          <div class="evolution-container">
+            <div class="evolution-step">
+              <p>DAO</p>
+            </div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-step">
+              <p>Data Mapper</p>
+            </div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-step">
+              <p>Repository</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Padrões de Projeto • Questão 1</p>
+      </div>
+    </div>
+  </body>
+</html>
