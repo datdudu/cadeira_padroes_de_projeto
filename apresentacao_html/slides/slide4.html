@@ -1,355 +1,407 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Data Mapper</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;family=Roboto+Mono:wght@300;400;500&amp;display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&amp;family=Roboto:wght@300;400;500&amp;family=Roboto+Mono:wght@300;400;500&amp;display=swap"
+            rel="stylesheet"
     />
     <style>
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow: hidden;
-      }
-      .slide-container {
-        max-width: 100%; width: 100vw;
-        min-height: 720px;
-        background-color: #0a2540;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        font-family: "Roboto", sans-serif;
-      }
-      .slide-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        padding: 25px 35px;
-      }
-      .slide-header {
-        margin-bottom: 10px;
-      }
-      .slide-title {
-        font-family: "Montserrat", sans-serif;
-        font-size: 30px;
-        font-weight: 700;
-        color: #2e86ab;
-        margin: 0 0 5px 0;
-        line-height: 1.1;
-      }
-      .content-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 15px;
-        flex: 1;
-        max-height: calc(100vh - 100px);
-      }
-      .concepts-section {
-        display: flex;
-        flex-direction: column;
-      }
-      .section-title {
-        font-family: "Montserrat", sans-serif;
-        font-size: 16px;
-        font-weight: 600;
-        color: #f18f01;
-        margin: 0 0 8px 0;
-        border-bottom: 2px solid #f18f01;
-        padding-bottom: 3px;
-      }
-      .concept-container {
-        margin-bottom: 12px;
-      }
-      .concept-item {
-        display: flex;
-        align-items: flex-start;
-        margin: 6px 0;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 6px 10px;
-        border-radius: 5px;
-        border-left: 3px solid #2e86ab;
-      }
-      .concept-icon {
-        font-size: 12px;
-        margin-right: 8px;
-        width: 16px;
-        text-align: center;
-        color: #f18f01;
-        flex-shrink: 0;
-        margin-top: 2px;
-      }
-      .concept-text {
-        flex: 1;
-      }
-      .concept-text p {
-        margin: 0;
-        font-size: 13px;
-        line-height: 1.2;
-      }
-      .concept-text p strong {
-        color: #a23b72;
-        font-weight: 600;
-      }
-      .highlight-box {
-        background: rgba(162, 59, 114, 0.15);
-        border: 1px solid rgba(162, 59, 114, 0.3);
-        border-radius: 6px;
-        padding: 8px;
-        margin: 8px 0;
-      }
-      .highlight-title {
-        font-weight: 600;
-        color: #a23b72;
-        font-size: 12px;
-        margin-bottom: 4px;
-      }
-      .highlight-text {
-        font-size: 11px;
-        line-height: 1.2;
-        color: rgba(255, 255, 255, 0.9);
-      }
-      .code-section {
-        display: flex;
-        flex-direction: column;
-        max-height: 100%;
-      }
-      .code-container {
-        background-color: rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
-        padding: 8px;
-        margin-bottom: 6px;
-        position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        flex: 1;
-      }
-      .code-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 4px;
-      }
-      .code-title {
-        font-family: "Montserrat", sans-serif;
-        font-size: 11px;
-        font-weight: 600;
-        color: #f18f01;
-      }
-      .code-dots {
-        display: flex;
-      }
-      .code-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        margin-left: 3px;
-      }
-      .dot-red {
-        background-color: #ff5f56;
-      }
-      .dot-yellow {
-        background-color: #ffbd2e;
-      }
-      .dot-green {
-        background-color: #27c93f;
-      }
-      pre {
-        margin: 0;
-        background-color: #1e2f45;
-        border-radius: 4px;
-        padding: 6px;
-        overflow: auto;
-        font-family: "Roboto Mono", monospace;
-        font-size: 9px;
-        line-height: 1.2;
-        max-height: 120px;
-      }
-      code {
-        font-family: "Roboto Mono", monospace;
-      }
-      .code-keyword {
-        color: #c792ea;
-      }
-      .code-type {
-        color: #ffcb6b;
-      }
-      .code-method {
-        color: #82aaff;
-      }
-      .code-comment {
-        color: #546e7a;
-      }
-      .code-string {
-        color: #c3e88d;
-      }
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .slide-container {
+            max-width: 100%; width: 100vw;
+            min-height: 720px;
+            background-color: #0a2540;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            font-family: "Roboto", sans-serif;
+        }
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 25px 35px;
+        }
+        .slide-header {
+            margin-bottom: 10px;
+        }
+        .slide-title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #2e86ab;
+            margin: 0 0 5px 0;
+            line-height: 1.1;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 15px;
+            flex: 1;
+            max-height: calc(100vh - 100px);
+        }
+        .concepts-section {
+            display: flex;
+            flex-direction: column;
+        }
+        .section-title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #f18f01;
+            margin: 0 0 8px 0;
+            border-bottom: 2px solid #f18f01;
+            padding-bottom: 3px;
+        }
+        .concept-container {
+            margin-bottom: 12px;
+        }
+        .concept-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 6px 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            border-radius: 5px;
+            border-left: 3px solid #2e86ab;
+        }
+        .concept-icon {
+            font-size: 12px;
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            color: #f18f01;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .concept-text {
+            flex: 1;
+        }
+        .concept-text p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        .concept-text p strong {
+            color: #a23b72;
+            font-weight: 600;
+        }
+        .highlight-box {
+            background: rgba(162, 59, 114, 0.15);
+            border: 1px solid rgba(162, 59, 114, 0.3);
+            border-radius: 6px;
+            padding: 8px;
+            margin: 8px 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            color: #a23b72;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .highlight-text {
+            font-size: 11px;
+            line-height: 1.2;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+        }
+        .code-container {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 6px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex: 1;
+        }
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .code-title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: #f18f01;
+        }
+        .code-dots {
+            display: flex;
+        }
+        .code-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-left: 3px;
+        }
+        .dot-red {
+            background-color: #ff5f56;
+        }
+        .dot-yellow {
+            background-color: #ffbd2e;
+        }
+        .dot-green {
+            background-color: #27c93f;
+        }
+        pre {
+            margin: 0;
+            background-color: #1e2f45;
+            border-radius: 4px;
+            padding: 6px;
+            overflow: auto;
+            font-family: "Roboto Mono", monospace;
+            font-size: 9px;
+            line-height: 1.2;
+            max-height: 120px;
+        }
+        code {
+            font-family: "Roboto Mono", monospace;
+        }
+        .code-keyword {
+            color: #c792ea;
+        }
+        .code-type {
+            color: #ffcb6b;
+        }
+        .code-method {
+            color: #82aaff;
+        }
+        .code-comment {
+            color: #546e7a;
+        }
+        .code-string {
+            color: #c3e88d;
+        }
     </style>
-  </head>
-  <body>
-    <div class="slide-container">
-      <div class="slide-content">
+</head>
+<body>
+<div class="slide-container">
+    <div class="slide-content">
         <div class="slide-header">
-          <h1 class="slide-title">DataMapper Pattern</h1>
+            <h1 class="slide-title">DataMapper Pattern</h1>
         </div>
 
         <div class="content-grid">
-          <div class="concepts-section">
-            <div class="section-title">Conceitos Fundamentais</div>
-            <div class="concept-container">
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p><strong>Objetivo:</strong> Separar totalmente lógica de domínio da persistência</p>
+            <div class="concepts-section">
+                <div class="section-title">Conceitos Fundamentais</div>
+                <div class="concept-container">
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p><strong>Objetivo:</strong> Separar totalmente lógica de domínio da persistência</p>
+                        </div>
+                    </div>
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p><strong>Função:</strong> Mapeamento entre objeto de domínio e objeto de persistência</p>
+                        </div>
+                    </div>
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p><strong>Característica:</strong> Domínio não tem setters, apenas getters</p>
+                        </div>
+                    </div>
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p><strong>Integração:</strong> Pode ser usado junto ao DAO</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p><strong>Função:</strong> Mapeamento entre objeto de domínio e objeto de persistência</p>
+
+                <div class="section-title">Diferenças do DAO</div>
+                <div class="highlight-box">
+                    <div class="highlight-title">DAO vs DataMapper</div>
+                    <div class="highlight-text">
+                        • <strong>DAO:</strong> Mistura mapeamento com SQL<br>
+                        • <strong>DataMapper:</strong> Separa mapeamento em método específico<br>
+                        • <strong>DAO:</strong> Usa setters na entidade<br>
+                        • <strong>DataMapper:</strong> Usa construtor/factory methods
+                    </div>
                 </div>
-              </div>
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p><strong>Característica:</strong> Domínio não tem setters, apenas getters</p>
+
+                <div class="section-title">Vantagens</div>
+                <div class="concept-container">
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p>Domínio puro sem dependência de persistência</p>
+                        </div>
+                    </div>
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p>Facilita testes unitários</p>
+                        </div>
+                    </div>
+                    <div class="concept-item">
+                        <div class="concept-icon">•</div>
+                        <div class="concept-text">
+                            <p>Reutilização de mapeamento</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p><strong>Integração:</strong> Pode ser usado junto ao DAO</p>
-                </div>
-              </div>
             </div>
 
-            <div class="section-title">Diferenças do DAO</div>
-            <div class="highlight-box">
-              <div class="highlight-title">DAO vs DataMapper</div>
-              <div class="highlight-text">
-                • <strong>DAO:</strong> Mistura mapeamento com SQL<br>
-                • <strong>DataMapper:</strong> Separa mapeamento em método específico<br>
-                • <strong>DAO:</strong> Usa setters na entidade<br>
-                • <strong>DataMapper:</strong> Usa construtor/factory methods
-              </div>
-            </div>
+            <div class="code-section">
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-title">User.java - Domínio Puro</div>
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                    </div>
+                    <pre><code><span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">User</span> {
+    <span class="code-keyword">private</span> <span class="code-type">Long</span> id;
+    <span class="code-keyword">private</span> <span class="code-type">String</span> name;
+    <span class="code-keyword">private</span> <span class="code-type">String</span> email;
 
-            <div class="section-title">Vantagens</div>
-            <div class="concept-container">
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p>Domínio puro sem dependência de persistência</p>
-                </div>
-              </div>
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p>Facilita testes unitários</p>
-                </div>
-              </div>
-              <div class="concept-item">
-                <div class="concept-icon">•</div>
-                <div class="concept-text">
-                  <p>Reutilização de mapeamento</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="code-section">
-            <div class="code-container">
-              <div class="code-header">
-                <div class="code-title">Livro.java - Domínio Puro</div>
-                <div class="code-dots">
-                  <div class="code-dot dot-red"></div>
-                  <div class="code-dot dot-yellow"></div>
-                  <div class="code-dot dot-green"></div>
-                </div>
-              </div>
-              <pre><code><span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">Livro</span> {
-    <span class="code-keyword">private</span> <span class="code-keyword">final</span> <span class="code-type">Long</span> id;
-    <span class="code-keyword">private</span> <span class="code-keyword">final</span> <span class="code-type">String</span> titulo;
-    <span class="code-keyword">private</span> <span class="code-keyword">final</span> <span class="code-type">String</span> autor;
-    <span class="code-keyword">private</span> <span class="code-type">boolean</span> disponivel;
-
-    <span class="code-comment">// Construtor (sem setters)</span>
-    <span class="code-keyword">public</span> <span class="code-method">Livro</span>(<span class="code-type">Long</span> id, <span class="code-type">String</span> titulo, <span class="code-type">String</span> autor, <span class="code-type">boolean</span> disponivel) {
+    <span class="code-keyword">public</span> <span class="code-method">User</span>(<span class="code-type">Long</span> id, <span class="code-type">String</span> name, <span class="code-type">String</span> email) {
         <span class="code-keyword">this</span>.id = id;
-        <span class="code-keyword">this</span>.titulo = titulo;
-        <span class="code-keyword">this</span>.autor = autor;
-        <span class="code-keyword">this</span>.disponivel = disponivel;
+        <span class="code-keyword">this</span>.name = name;
+        <span class="code-keyword">this</span>.email = email;
     }
 
-    <span class="code-comment">// Métodos de negócio</span>
-    <span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">emprestar</span>() {
-        <span class="code-keyword">if</span> (!disponivel) <span class="code-keyword">throw</span> <span class="code-keyword">new</span> <span class="code-type">IllegalStateException</span>(<span class="code-string">"Livro já emprestado"</span>);
-        <span class="code-keyword">this</span>.disponivel = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">changeEmail</span>(<span class="code-type">String</span> newEmail) {
+        <span class="code-keyword">if</span> (newEmail == <span class="code-keyword">null</span> || !newEmail.<span class="code-method">contains</span>(<span class="code-string">"@"</span>))
+            <span class="code-keyword">throw new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"invalid email"</span>);
+        <span class="code-keyword">this</span>.email = newEmail;
     }
 
-    <span class="code-comment">// Apenas getters</span>
+    <span class="code-comment">// getters (no setters for invariantes de negócio)</span>
     <span class="code-keyword">public</span> <span class="code-type">Long</span> <span class="code-method">getId</span>() { <span class="code-keyword">return</span> id; }
-    <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">getTitulo</span>() { <span class="code-keyword">return</span> titulo; }
+    <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">getName</span>() { <span class="code-keyword">return</span> name; }
+    <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">getEmail</span>() { <span class="code-keyword">return</span> email; }
 }</code></pre>
-            </div>
-
-            <div class="code-container">
-              <div class="code-header">
-                <div class="code-title">LivroMapper.java - Mapeamento Separado</div>
-                <div class="code-dots">
-                  <div class="code-dot dot-red"></div>
-                  <div class="code-dot dot-yellow"></div>
-                  <div class="code-dot dot-green"></div>
                 </div>
-              </div>
-              <pre><code><span class="code-keyword">public</span> <span class="code-keyword">interface</span> <span class="code-type">LivroMapper</span> {
-    <span class="code-keyword">void</span> <span class="code-method">insert</span>(<span class="code-type">Livro</span> livro);
-    <span class="code-keyword">void</span> <span class="code-method">update</span>(<span class="code-type">Livro</span> livro);
-    <span class="code-type">Optional</span>&lt;<span class="code-type">Livro</span>&gt; <span class="code-method">findById</span>(<span class="code-type">Long</span> id);
-    <span class="code-type">List</span>&lt;<span class="code-type">Livro</span>&gt; <span class="code-method">findAll</span>();
-}
 
-<span class="code-comment">// Implementação com mapeamento separado</span>
-<span class="code-keyword">private</span> <span class="code-type">Livro</span> <span class="code-method">mapRow</span>(<span class="code-type">ResultSet</span> rs) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span> {
-    <span class="code-keyword">return new</span> <span class="code-type">Livro</span>(
-        rs.<span class="code-method">getLong</span>(<span class="code-string">"id"</span>),
-        rs.<span class="code-method">getString</span>(<span class="code-string">"titulo"</span>),
-        rs.<span class="code-method">getString</span>(<span class="code-string">"autor"</span>),
-        rs.<span class="code-method">getBoolean</span>(<span class="code-string">"disponivel"</span>)
-    );
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-title">UserMapper.java - Interface</div>
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                    </div>
+                    <pre><code><span class="code-keyword">public</span> <span class="code-keyword">interface</span> <span class="code-type">UserMapper</span> {
+    <span class="code-type">User</span> <span class="code-method">load</span>(<span class="code-type">Long</span> id) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span>;
+    <span class="code-keyword">void</span> <span class="code-method">insert</span>(<span class="code-type">User</span> user) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span>;
+    <span class="code-keyword">void</span> <span class="code-method">update</span>(<span class="code-type">User</span> user) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span>;
 }</code></pre>
-            </div>
-
-            <div class="code-container">
-              <div class="code-header">
-                <div class="code-title">Update com Mapper</div>
-                <div class="code-dots">
-                  <div class="code-dot dot-red"></div>
-                  <div class="code-dot dot-yellow"></div>
-                  <div class="code-dot dot-green"></div>
                 </div>
-              </div>
-              <pre><code><span class="code-annotation">@Override</span>
-<span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">update</span>(<span class="code-type">Livro</span> livro) {
-    <span class="code-type">String</span> sql = <span class="code-string">"UPDATE livros SET titulo=?, autor=?, disponivel=? WHERE id=?"</span>;
-    <span class="code-keyword">try</span> (<span class="code-type">PreparedStatement</span> stmt = connection.<span class="code-method">prepareStatement</span>(sql)) {
-        <span class="code-comment">// Usa getters (não setters)</span>
-        stmt.<span class="code-method">setString</span>(1, livro.<span class="code-method">getTitulo</span>());
-        stmt.<span class="code-method">setString</span>(2, livro.<span class="code-method">getAutor</span>());
-        stmt.<span class="code-method">setBoolean</span>(3, livro.<span class="code-method">isDisponivel</span>());
-        stmt.<span class="code-method">setLong</span>(4, livro.<span class="code-method">getId</span>());
-        stmt.<span class="code-method">executeUpdate</span>();
-    } <span class="code-keyword">catch</span> (<span class="code-type">SQLException</span> e) {
-        <span class="code-keyword">throw</span> <span class="code-keyword">new</span> <span class="code-type">RuntimeException</span>(<span class="code-string">"Erro ao atualizar livro"</span>, e);
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-title">UserMapperJdbc.java - Implementação</div>
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                    </div>
+                    <pre><code><span class="code-keyword">import</span> <span class="code-type">javax.sql.DataSource</span>;
+<span class="code-keyword">import</span> <span class="code-type">java.sql.*</span>;
+
+<span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">UserMapperJdbc</span> <span class="code-keyword">implements</span> <span class="code-type">UserMapper</span> {
+    <span class="code-keyword">private final</span> <span class="code-type">DataSource</span> ds;
+
+    <span class="code-keyword">public</span> <span class="code-method">UserMapperJdbc</span>(<span class="code-type">DataSource</span> ds) {
+        <span class="code-keyword">this</span>.ds = ds;
+    }
+
+    @<span class="code-annotation">Override</span>
+    <span class="code-keyword">public</span> <span class="code-type">User</span> <span class="code-method">load</span>(<span class="code-type">Long</span> id) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span> {
+        <span class="code-type">String</span> sql = <span class="code-string">"SELECT id, name, email FROM users WHERE id = ?"</span>;
+        <span class="code-keyword">try</span> (<span class="code-type">Connection</span> c = ds.<span class="code-method">getConnection</span>();
+             <span class="code-type">PreparedStatement</span> ps = c.<span class="code-method">prepareStatement</span>(sql)) {
+            ps.<span class="code-method">setLong</span>(1, id);
+            <span class="code-keyword">try</span> (<span class="code-type">ResultSet</span> rs = ps.<span class="code-method">executeQuery</span>()) {
+                <span class="code-keyword">if</span> (!rs.<span class="code-method">next</span>()) <span class="code-keyword">return null</span>;
+                <span class="code-keyword">return</span> <span class="code-method">mapRowToUser</span>(rs);
+            }
+        }
+    }
+
+    @<span class="code-annotation">Override</span>
+    <span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">insert</span>(<span class="code-type">User</span> user) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span> {
+        <span class="code-type">String</span> sql = <span class="code-string">"INSERT INTO users (name,email) VALUES (?, ?)"</span>;
+        <span class="code-keyword">try</span> (<span class="code-type">Connection</span> c = ds.<span class="code-method">getConnection</span>();
+             <span class="code-type">PreparedStatement</span> ps = c.<span class="code-method">prepareStatement</span>(sql, <span class="code-type">Statement.RETURN_GENERATED_KEYS</span>)) {
+            ps.<span class="code-method">setString</span>(1, user.<span class="code-method">getName</span>());
+            ps.<span class="code-method">setString</span>(2, user.<span class="code-method">getEmail</span>());
+            ps.<span class="code-method">executeUpdate</span>();
+        }
+    }
+
+    @<span class="code-annotation">Override</span>
+    <span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">update</span>(<span class="code-type">User</span> user) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span> {
+        <span class="code-type">String</span> sql = <span class="code-string">"UPDATE users SET name = ?, email = ? WHERE id = ?"</span>;
+        <span class="code-keyword">try</span> (<span class="code-type">Connection</span> c = ds.<span class="code-method">getConnection</span>();
+             <span class="code-type">PreparedStatement</span> ps = c.<span class="code-method">prepareStatement</span>(sql)) {
+            ps.<span class="code-method">setString</span>(1, user.<span class="code-method">getName</span>());
+            ps.<span class="code-method">setString</span>(2, user.<span class="code-method">getEmail</span>());
+            ps.<span class="code-method">setLong</span>(3, user.<span class="code-method">getId</span>());
+            ps.<span class="code-method">executeUpdate</span>();
+        }
+    }
+
+    <span class="code-keyword">private</span> <span class="code-type">User</span> <span class="code-method">mapRowToUser</span>(<span class="code-type">ResultSet</span> rs) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span> {
+        <span class="code-keyword">return new</span> <span class="code-type">User</span>(
+            rs.<span class="code-method">getLong</span>(<span class="code-string">"id"</span>),
+            rs.<span class="code-method">getString</span>(<span class="code-string">"name"</span>),
+            rs.<span class="code-method">getString</span>(<span class="code-string">"email"</span>)
+        );
     }
 }</code></pre>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-title">UserServiceWithMapper.java - Uso</div>
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                    </div>
+                    <pre><code><span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">UserServiceWithMapper</span> {
+    <span class="code-keyword">private final</span> <span class="code-type">UserMapper</span> mapper;
+
+    <span class="code-keyword">public</span> <span class="code-method">UserServiceWithMapper</span>(<span class="code-type">UserMapper</span> mapper) {
+        <span class="code-keyword">this</span>.mapper = mapper;
+    }
+
+    <span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">changeEmail</span>(<span class="code-type">Long</span> id, <span class="code-type">String</span> newEmail) <span class="code-keyword">throws</span> <span class="code-type">SQLException</span> {
+        <span class="code-type">User</span> user = mapper.<span class="code-method">load</span>(id);
+        <span class="code-keyword">if</span> (user == <span class="code-keyword">null</span>) <span class="code-keyword">throw new</span> <span class="code-type">RuntimeException</span>(<span class="code-string">"not found"</span>);
+        user.<span class="code-method">changeEmail</span>(newEmail); <span class="code-comment">// lógica de negócio encapsulada na entidade</span>
+        mapper.<span class="code-method">update</span>(user);
+    }
+}</code></pre>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>
