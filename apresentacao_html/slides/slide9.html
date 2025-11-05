@@ -30,7 +30,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 35px 45px;
+        padding: 30px 40px;
       }
       .slide-header {
         margin-bottom: 20px;
@@ -44,21 +44,21 @@
         line-height: 1.2;
       }
       .problem-description {
-        margin-bottom: 18px;
+        margin-bottom: 15px;
         background-color: rgba(255, 255, 255, 0.05);
-        padding: 15px;
+        padding: 12px;
         border-radius: 8px;
         border-left: 4px solid #f18f01;
       }
       .problem-description p {
         margin: 0;
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.3;
       }
       .comparison-container {
         display: flex;
         flex: 1;
-        gap: 20px;
+        gap: 16px;
       }
       .code-column {
         flex: 1;
@@ -111,17 +111,17 @@
       }
       .code-content {
         flex: 1;
-        padding: 15px;
+        padding: 12px;
       }
       pre {
         margin: 0;
         background-color: #1e2f45;
         border-radius: 6px;
-        padding: 15px;
+        padding: 12px;
         overflow: auto;
-        height: calc(100% - 30px);
+        height: calc(100% - 24px);
         font-family: "Roboto Mono", monospace;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 1.3;
       }
       code {
@@ -152,9 +152,8 @@
         </div>
         <div class="problem-description">
           <p>
-            <strong>Problema:</strong> Quando uma classe acumula muitas
-            funcionalidades opcionais ou 'enfeites', ela se torna complexa e
-            difícil de manter
+            <strong>Problema:</strong> Classe com múltiplas responsabilidades viola <strong>SRP</strong>. 
+            Configuração via flags booleanas limita combinações e dificulta testes independentes.
           </p>
         </div>
         <div class="comparison-container">
@@ -168,23 +167,29 @@
               </div>
             </div>
             <div class="code-content">
-              <pre><code><span class="code-keyword">public class</span> <span class="code-type">Relatorio</span> {
-    <span class="code-keyword">private</span> <span class="code-type">String</span> dados;
+              <pre><code><span class="code-keyword">public class</span> <span class="code-type">RelatorioVendas</span> {
+    <span class="code-keyword">private</span> <span class="code-type">List&lt;String&gt;</span> dados;
     <span class="code-keyword">private boolean</span> incluirCabecalho;
     <span class="code-keyword">private boolean</span> incluirRodape;
+    <span class="code-keyword">private boolean</span> incluirTimestamp;
+    <span class="code-keyword">private boolean</span> incluirAssinatura;
     <span class="code-keyword">private boolean</span> comprimirDados;
     <span class="code-keyword">private boolean</span> criptografarDados;
     
     <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">gerar</span>() {
-        <span class="code-type">String</span> resultado = dados;
+        <span class="code-type">StringBuilder</span> relatorio = <span class="code-keyword">new</span> <span class="code-type">StringBuilder</span>();
         
         <span class="code-keyword">if</span> (incluirCabecalho) {
-            resultado = addCabecalho(resultado);
+            relatorio.append(<span class="code-string">"=== RELATÓRIO ==="</span>);
         }
-        <span class="code-keyword">if</span> (comprimirDados) {
-            resultado = comprimir(resultado);
+        <span class="code-keyword">if</span> (incluirTimestamp) {
+            relatorio.append(<span class="code-method">getTimestamp</span>());
         }
-        <span class="code-comment">// Mais condicionais...</span>
+        <span class="code-comment">// + dados principais...</span>
+        <span class="code-keyword">if</span> (incluirAssinatura) {
+            relatorio.append(<span class="code-string">"Assinado..."</span>);
+        }
+        <span class="code-comment">// Múltiplas responsabilidades!</span>
     }
 }</code></pre>
             </div>
@@ -199,24 +204,28 @@
               </div>
             </div>
             <div class="code-content">
-              <pre><code><span class="code-keyword">public interface</span> <span class="code-type">Relatorio</span> {
+              <pre><code><span class="code-comment">// Component Interface</span>
+<span class="code-keyword">public interface</span> <span class="code-type">Relatorio</span> {
     <span class="code-type">String</span> <span class="code-method">gerar</span>();
 }
 
-<span class="code-keyword">public class</span> <span class="code-type">RelatorioBasico</span> <span class="code-keyword">implements</span> <span class="code-type">Relatorio</span> {
-    <span class="code-keyword">private final</span> <span class="code-type">String</span> dados;
+<span class="code-comment">// Base Decorator</span>
+<span class="code-keyword">public abstract class</span> <span class="code-type">RelatorioDecorator</span> <span class="code-keyword">implements</span> <span class="code-type">Relatorio</span> {
+    <span class="code-keyword">protected</span> <span class="code-type">Relatorio</span> relatorio;
     
-    <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">gerar</span>() {
-        <span class="code-keyword">return</span> dados;
+    <span class="code-keyword">public</span> <span class="code-method">RelatorioDecorator</span>(<span class="code-type">Relatorio</span> relatorio) {
+        <span class="code-keyword">this</span>.relatorio = relatorio;
     }
 }
 
-<span class="code-comment">// Uso com decoradores:</span>
-<span class="code-keyword">new</span> <span class="code-type">CriptografiaDecorator</span>(
-    <span class="code-keyword">new</span> <span class="code-type">CabecalhoDecorator</span>(
-        <span class="code-keyword">new</span> <span class="code-type">RelatorioBasico</span>(dados)
-    )
-);</code></pre>
+<span class="code-comment">// Concrete Decorators</span>
+<span class="code-keyword">public class</span> <span class="code-type">CabecalhoDecorator</span> <span class="code-keyword">extends</span> <span class="code-type">RelatorioDecorator</span> {
+    <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">gerar</span>() {
+        <span class="code-keyword">return</span> <span class="code-string">"=== RELATÓRIO ===\n"</span> + <span class="code-keyword">super</span>.gerar();
+    }
+}
+
+<span class="code-comment">// Combinação flexível de funcionalidades!</span></code></pre>
             </div>
           </div>
         </div>

@@ -30,17 +30,17 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 40px 50px;
+        padding: 35px 45px;
       }
       .slide-header {
-        margin-bottom: 15px;
+        margin-bottom: 12px;
       }
       .slide-title {
         font-family: "Montserrat", sans-serif;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 700;
         color: #2e86ab;
-        margin: 0 0 12px 0;
+        margin: 0 0 10px 0;
         line-height: 1.1;
       }
       .slide-subtitle {
@@ -55,7 +55,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        margin-top: 15px;
+        margin-top: 12px;
       }
       .big-icon {
         font-size: 60px;
@@ -68,14 +68,14 @@
       .content-item {
         display: flex;
         align-items: center;
-        margin: 15px 0;
+        margin: 12px 0;
         z-index: 1;
         position: relative;
       }
       .content-item-icon {
-        font-size: 20px;
-        margin-right: 20px;
-        width: 32px;
+        font-size: 18px;
+        margin-right: 18px;
+        width: 30px;
         text-align: center;
         color: #2e86ab;
       }
@@ -84,7 +84,7 @@
       }
       .content-item-text p {
         margin: 0;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 1.3;
       }
       .content-item-text p strong {
@@ -118,25 +118,25 @@
       .year-comparison {
         display: flex;
         justify-content: space-between;
-        margin-top: 15px;
+        margin-top: 12px;
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 8px;
       }
       .year-block {
         flex: 1;
-        padding: 25px;
+        padding: 20px;
         text-align: center;
       }
       .year {
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 700;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         color: #2e86ab;
       }
       .year-content p {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.3;
-        margin: 10px 0;
+        margin: 8px 0;
       }
       .divider {
         width: 2px;
@@ -157,11 +157,26 @@
         <div class="big-icon"></div>
         <div class="content-container">
           <div class="content-item">
-            <div class="content-item-icon"></div>
+            <div class="content-item-icon">📚</div>
             <div class="content-item-text">
               <p>
-                <strong>Padrões de Projeto:</strong> Evoluem com as linguagens e
-                paradigmas
+                <strong>GoF (1994):</strong> "Design Patterns: Elements of Reusable OO Software" - 23 padrões clássicos
+              </p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">⏳</div>
+            <div class="content-item-text">
+              <p>
+                <strong>30 anos depois:</strong> Alguns padrões absorvidos por linguagens, outros considerados overengineering
+              </p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">🎯</div>
+            <div class="content-item-text">
+              <p>
+                <strong>Realidade atual:</strong> Dependency Injection substituiu padrões criacionais em aplicações modernas
               </p>
             </div>
           </div>
@@ -169,11 +184,11 @@
             <div class="year-block">
               <div class="year">1994</div>
               <div class="year-content">
-                <p><strong>GoF</strong></p>
-                <p>23 padrões criacionais</p>
-                <p>Foco em criar objetos</p>
+                <p><strong>GoF Criacionais</strong></p>
+                <p>Singleton, Abstract Factory, Prototype</p>
+                <p>Controle de criação centralizado</p>
+                <p>Hierarquias complexas</p>
                 <p>Código verboso</p>
-                <p>Controle centralizado</p>
               </div>
             </div>
             <div class="divider"></div>
@@ -181,19 +196,18 @@
               <div class="year">2024</div>
               <div class="year-content">
                 <p><strong>Dependency Injection</strong></p>
-                <p>Inversão de controle</p>
-                <p>Testabilidade</p>
-                <p>Configuração externa</p>
-                <p>Frameworks modernos</p>
+                <p>Inversão de controle (IoC)</p>
+                <p>Configuração externa e profiles</p>
+                <p>Testabilidade e mocks</p>
+                <p>Frameworks nativos (Spring, CDI)</p>
               </div>
             </div>
           </div>
-          <div class="content-item" style="margin-top: 30px">
-            <div class="content-item-icon">•</div>
+          <div class="content-item" style="margin-top: 25px">
+            <div class="content-item-icon">⚠️</div>
             <div class="content-item-text">
               <p>
-                <strong>Realidade:</strong> "30 anos depois nem todos os padrões
-                continuam relevantes"
+                <strong>Padrões em declínio:</strong> Singleton, Abstract Factory e Prototype amplamente desencorajados
               </p>
             </div>
           </div>

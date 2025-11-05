@@ -30,48 +30,48 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 35px 45px;
+        padding: 20px 30px;
       }
       .slide-header {
-        margin-bottom: 20px;
+        margin-bottom: 8px;
       }
       .slide-title {
         font-family: "Montserrat", sans-serif;
-        font-size: 32px;
+        font-size: 24px;
         font-weight: 700;
         color: #2e86ab;
-        margin: 0 0 10px 0;
-        line-height: 1.2;
+        margin: 0 0 5px 0;
+        line-height: 1.1;
       }
       .problem-description {
-        margin-bottom: 18px;
+        margin-bottom: 10px;
         background-color: rgba(255, 255, 255, 0.05);
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 4px solid #f18f01;
+        padding: 8px;
+        border-radius: 6px;
+        border-left: 3px solid #f18f01;
       }
       .problem-description p {
         margin: 0;
-        font-size: 15px;
-        line-height: 1.3;
+        font-size: 12px;
+        line-height: 1.2;
       }
       .comparison-container {
         display: flex;
         flex: 1;
-        gap: 20px;
+        gap: 12px;
       }
       .code-column {
         flex: 1;
         display: flex;
         flex-direction: column;
         background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        border-radius: 6px;
         overflow: hidden;
       }
       .code-header {
         display: flex;
         justify-content: space-between;
-        padding: 10px 15px;
+        padding: 6px 10px;
         align-items: center;
       }
       .before-header {
@@ -82,7 +82,7 @@
       }
       .code-label {
         font-family: "Montserrat", sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: 600;
       }
       .before-label {
@@ -95,10 +95,10 @@
         display: flex;
       }
       .code-dot {
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        margin-left: 6px;
+        margin-left: 4px;
       }
       .dot-red {
         background-color: #ff5f56;
@@ -111,18 +111,18 @@
       }
       .code-content {
         flex: 1;
-        padding: 15px;
+        padding: 8px;
       }
       pre {
         margin: 0;
         background-color: #1e2f45;
-        border-radius: 6px;
-        padding: 15px;
+        border-radius: 4px;
+        padding: 8px;
         overflow: auto;
-        height: calc(100% - 30px);
+        height: calc(100% - 16px);
         font-family: "Roboto Mono", monospace;
-        font-size: 16px;
-        line-height: 1.3;
+        font-size: 11px;
+        line-height: 1.2;
       }
       code {
         font-family: "Roboto Mono", monospace;
@@ -143,22 +143,25 @@
         color: #c3e88d;
       }
       .problems-list {
-        margin-top: 15px;
-        padding: 15px;
+        margin-top: 8px;
+        padding: 8px;
         background-color: rgba(199, 62, 29, 0.15);
-        border-radius: 8px;
+        border-radius: 6px;
       }
       .problems-list p {
-        margin: 0 0 10px 0;
+        margin: 0 0 6px 0;
         font-weight: 600;
         color: #ff5f56;
+        font-size: 11px;
       }
       .problems-list ul {
         margin: 0;
-        padding-left: 20px;
+        padding-left: 15px;
       }
       .problems-list li {
-        margin-bottom: 5px;
+        margin-bottom: 3px;
+        font-size: 10px;
+        line-height: 1.1;
       }
     </style>
   </head>
@@ -170,10 +173,8 @@
         </div>
         <div class="problem-description">
           <p>
-            <strong>Singleton:</strong> Padrão criacional que garante que uma
-            classe tenha apenas uma instância e fornece um ponto global de
-            acesso a ela. Apesar de popular, é considerado um anti-padrão em
-            muitos contextos modernos.
+            <strong>Singleton:</strong> Padrão criacional que garante uma única instância, mas promove <strong>global state</strong>, 
+            <strong>impossibilita testes</strong> e cria <strong>acoplamento forte</strong>. Considerado anti-padrão em contextos modernos.
           </p>
         </div>
         <div class="comparison-container">
@@ -190,6 +191,11 @@
               <pre><code><span class="code-comment">// Singleton - PROBLEMÁTICO</span>
 <span class="code-keyword">public class</span> <span class="code-type">DatabaseConnection</span> {
     <span class="code-keyword">private static</span> <span class="code-type">DatabaseConnection</span> instance;
+    <span class="code-keyword">private</span> <span class="code-type">String</span> connectionString;
+    
+    <span class="code-keyword">private</span> <span class="code-method">DatabaseConnection</span>() {
+        <span class="code-keyword">this</span>.connectionString = <span class="code-string">"jdbc:mysql://localhost..."</span>;
+    }
     
     <span class="code-keyword">public static</span> <span class="code-type">DatabaseConnection</span> <span class="code-method">getInstance</span>() {
         <span class="code-keyword">if</span> (instance == <span class="code-keyword">null</span>) {
@@ -197,10 +203,19 @@
         }
         <span class="code-keyword">return</span> instance;
     }
+    
+    <span class="code-keyword">public void</span> <span class="code-method">connect</span>() {
+        System.out.println(<span class="code-string">"Conectando: "</span> + connectionString);
+    }
 }
 
-<span class="code-comment">// Uso problemático</span>
-<span class="code-type">DatabaseConnection</span> db = <span class="code-type">DatabaseConnection</span>.<span class="code-method">getInstance</span>();</code></pre>
+<span class="code-comment">// Uso problemático - Acoplamento forte</span>
+<span class="code-keyword">public class</span> <span class="code-type">UserService</span> {
+    <span class="code-keyword">public void</span> <span class="code-method">createUser</span>(<span class="code-type">String</span> name) {
+        <span class="code-type">DatabaseConnection</span> db = <span class="code-type">DatabaseConnection</span>.<span class="code-method">getInstance</span>();
+        db.<span class="code-method">connect</span>(); <span class="code-comment">// Impossível mockar!</span>
+    }
+}</code></pre>
               <div class="problems-list">
                 <p>Problemas do Singleton:</p>
                 <ul>
@@ -208,6 +223,7 @@
                   <li>Testabilidade: Impossibilita mocks isolados</li>
                   <li>Acoplamento: Alto acoplamento com usuários</li>
                   <li>Concorrência: Race conditions e deadlocks</li>
+                  <li>Configuração: Hardcoded, difícil múltiplas configs</li>
                 </ul>
               </div>
             </div>
@@ -222,22 +238,39 @@
               </div>
             </div>
             <div class="code-content">
-              <pre><code><span class="code-comment">// Dependency Injection - SOLUÇÃO</span>
-<span class="code-keyword">public class</span> <span class="code-type">UserService</span> {
-    <span class="code-keyword">private final</span> <span class="code-type">DatabaseConnection</span> database;
+              <pre><code><span class="code-comment">// Interface para inversão de dependência</span>
+<span class="code-keyword">public interface</span> <span class="code-type">DatabaseConnection</span> {
+    <span class="code-keyword">void</span> <span class="code-method">connect</span>();
+    <span class="code-keyword">void</span> <span class="code-method">disconnect</span>();
+}
+
+<span class="code-comment">// Implementação concreta</span>
+<span class="code-keyword">public class</span> <span class="code-type">MySQLConnection</span> <span class="code-keyword">implements</span> <span class="code-type">DatabaseConnection</span> {
+    <span class="code-keyword">private</span> <span class="code-type">String</span> connectionString;
     
-    <span class="code-keyword">public</span> <span class="code-method">UserService</span>(<span class="code-type">DatabaseConnection</span> database) {
-        <span class="code-keyword">this</span>.database = database; <span class="code-comment">// Injeção no construtor</span>
+    <span class="code-keyword">public</span> <span class="code-method">MySQLConnection</span>(<span class="code-type">String</span> connectionString) {
+        <span class="code-keyword">this</span>.connectionString = connectionString;
     }
     
-    <span class="code-keyword">public</span> <span class="code-type">User</span> <span class="code-method">findUserById</span>(<span class="code-type">Long</span> id) {
-        <span class="code-keyword">return</span> database.<span class="code-method">query</span>(<span class="code-string">"SELECT * FROM users..."</span>);
+    <span class="code-keyword">public void</span> <span class="code-method">connect</span>() {
+        System.out.println(<span class="code-string">"MySQL: "</span> + connectionString);
     }
 }
 
-<span class="code-comment">// Uso flexível e testável</span>
-<span class="code-type">DatabaseConnection</span> prodDB = <span class="code-keyword">new</span> <span class="code-type">RealDatabaseConnection</span>();
-<span class="code-type">UserService</span> service = <span class="code-keyword">new</span> <span class="code-type">UserService</span>(prodDB);</code></pre>
+<span class="code-comment">// Serviço com dependência injetada</span>
+<span class="code-keyword">public class</span> <span class="code-type">UserService</span> {
+    <span class="code-keyword">private final</span> <span class="code-type">DatabaseConnection</span> database;
+    
+    <span class="code-comment">// Injeção via construtor</span>
+    <span class="code-keyword">public</span> <span class="code-method">UserService</span>(<span class="code-type">DatabaseConnection</span> database) {
+        <span class="code-keyword">this</span>.database = database;
+    }
+    
+    <span class="code-keyword">public void</span> <span class="code-method">createUser</span>(<span class="code-type">String</span> name) {
+        database.<span class="code-method">connect</span>(); <span class="code-comment">// Fácil de mockar!</span>
+        database.<span class="code-method">disconnect</span>();
+    }
+}</code></pre>
             </div>
           </div>
         </div>

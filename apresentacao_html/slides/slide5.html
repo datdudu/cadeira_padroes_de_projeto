@@ -30,31 +30,55 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 35px 45px;
+        padding: 25px 35px;
       }
       .slide-header {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
       }
       .slide-title {
         font-family: "Montserrat", sans-serif;
-        font-size: 34px;
+        font-size: 30px;
         font-weight: 700;
         color: #2e86ab;
-        margin: 0 0 8px 0;
+        margin: 0 0 5px 0;
         line-height: 1.1;
       }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 15px;
+        flex: 1;
+        max-height: calc(100vh - 100px);
+      }
+      .concepts-section {
+        display: flex;
+        flex-direction: column;
+      }
+      .section-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #f18f01;
+        margin: 0 0 8px 0;
+        border-bottom: 2px solid #f18f01;
+        padding-bottom: 3px;
+      }
       .concept-container {
-        margin-bottom: 20px;
+        margin-bottom: 12px;
       }
       .concept-item {
         display: flex;
         align-items: flex-start;
-        margin: 10px 0;
+        margin: 6px 0;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px 10px;
+        border-radius: 5px;
+        border-left: 3px solid #2e86ab;
       }
       .concept-icon {
-        font-size: 15px;
-        margin-right: 12px;
-        width: 22px;
+        font-size: 12px;
+        margin-right: 8px;
+        width: 16px;
         text-align: center;
         color: #f18f01;
         flex-shrink: 0;
@@ -65,41 +89,65 @@
       }
       .concept-text p {
         margin: 0;
-        font-size: 17px;
-        line-height: 1.4;
+        font-size: 13px;
+        line-height: 1.2;
       }
       .concept-text p strong {
         color: #a23b72;
-        font-weight: 500;
+        font-weight: 600;
+      }
+      .highlight-box {
+        background: rgba(162, 59, 114, 0.15);
+        border: 1px solid rgba(162, 59, 114, 0.3);
+        border-radius: 6px;
+        padding: 8px;
+        margin: 8px 0;
+      }
+      .highlight-title {
+        font-weight: 600;
+        color: #a23b72;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+      .highlight-text {
+        font-size: 11px;
+        line-height: 1.2;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .code-section {
+        display: flex;
+        flex-direction: column;
+        max-height: 100%;
       }
       .code-container {
-        flex: 1;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.08);
         border-radius: 8px;
-        padding: 15px;
-        margin-top: 8px;
+        padding: 8px;
+        margin-bottom: 6px;
         position: relative;
         overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        flex: 1;
       }
       .code-header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
       }
       .code-title {
         font-family: "Montserrat", sans-serif;
-        font-size: 14px;
+        font-size: 11px;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.9);
+        color: #f18f01;
       }
       .code-dots {
         display: flex;
       }
       .code-dot {
-        width: 10px;
-        height: 10px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        margin-left: 5px;
+        margin-left: 3px;
       }
       .dot-red {
         background-color: #ff5f56;
@@ -113,13 +161,13 @@
       pre {
         margin: 0;
         background-color: #1e2f45;
-        border-radius: 6px;
-        padding: 15px;
+        border-radius: 4px;
+        padding: 6px;
         overflow: auto;
-        max-height: 100%;
         font-family: "Roboto Mono", monospace;
-        font-size: 15px;
-        line-height: 1.4;
+        font-size: 9px;
+        line-height: 1.2;
+        max-height: 120px;
       }
       code {
         font-family: "Roboto Mono", monospace;
@@ -145,49 +193,161 @@
     <div class="slide-container">
       <div class="slide-content">
         <div class="slide-header">
-          <h1 class="slide-title">Repository</h1>
+          <h1 class="slide-title">Repository Pattern</h1>
         </div>
-        <div class="concept-container">
-          <div class="concept-item">
-            <div class="concept-icon">•</div>
-            <div class="concept-text">
-              <p>
-                <strong>Conceito:</strong> Esconde completamente a lógica de
-                persistência de dados
-              </p>
+
+        <div class="content-grid">
+          <div class="concepts-section">
+            <div class="section-title">Conceitos Fundamentais</div>
+            <div class="concept-container">
+              <div class="concept-item">
+                <div class="concept-icon">•</div>
+                <div class="concept-text">
+                  <p><strong>Objetivo:</strong> Esconder completamente a lógica de persistência</p>
+                </div>
+              </div>
+              <div class="concept-item">
+                <div class="concept-icon">•</div>
+                <div class="concept-text">
+                  <p><strong>API:</strong> Alto nível para consulta e manipulação de agregados</p>
+                </div>
+              </div>
+              <div class="concept-item">
+                <div class="concept-icon">•</div>
+                <div class="concept-text">
+                  <p><strong>Perspectiva:</strong> "O que esse objeto de domínio pode fazer"</p>
+                </div>
+              </div>
+              <div class="concept-item">
+                <div class="concept-icon">•</div>
+                <div class="concept-text">
+                  <p><strong>Abstração:</strong> Objetos do domínio como "coleções"</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title">Repository vs DAO/Mapper</div>
+            <div class="highlight-box">
+              <div class="highlight-title">Diferenças Chave</div>
+              <div class="highlight-text">
+                • <strong>Repository:</strong> Métodos de negócio<br>
+                • <strong>DAO:</strong> Operações CRUD diretas<br>
+                • <strong>Repository:</strong> Trabalha com agregados<br>
+                • <strong>DAO:</strong> Trabalha com tabelas
+              </div>
+            </div>
+
+            <div class="section-title">Arquitetura em Camadas</div>
+            <div class="concept-container">
+              <div class="concept-item">
+                <div class="concept-icon">1</div>
+                <div class="concept-text">
+                  <p><strong>Repository</strong> → API de domínio</p>
+                </div>
+              </div>
+              <div class="concept-item">
+                <div class="concept-icon">2</div>
+                <div class="concept-text">
+                  <p><strong>DAO</strong> → Operações de persistência</p>
+                </div>
+              </div>
+              <div class="concept-item">
+                <div class="concept-icon">3</div>
+                <div class="concept-text">
+                  <p><strong>Mapper</strong> → Tradução objeto ↔ DB</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="highlight-box">
+              <div class="highlight-title">Fluxo de Dados</div>
+              <div class="highlight-text">
+                Domínio → Repository → DataMapper → DAO → Banco
+              </div>
             </div>
           </div>
-          <div class="concept-item">
-            <div class="concept-icon">•</div>
-            <div class="concept-text">
-              <p>
-                <strong>Diferencial:</strong> Atua como uma API de alto nível
-                para consulta e manipulação de agregados
-              </p>
-            </div>
-          </div>
-          <div class="concept-item">
-            <div class="concept-icon">•</div>
-            <div class="concept-text">
-              <p><strong>Foco:</strong> Objetos do domínio como "coleções"</p>
-            </div>
-          </div>
-        </div>
-        <div class="code-container">
-          <div class="code-header">
-            <div class="code-title">LivroRepository.java</div>
-            <div class="code-dots">
-              <div class="code-dot dot-red"></div>
-              <div class="code-dot dot-yellow"></div>
-              <div class="code-dot dot-green"></div>
-            </div>
-          </div>
-          <pre><code><span class="code-keyword">public</span> <span class="code-keyword">interface</span> <span class="code-type">LivroRepository</span> {
-    <span class="code-keyword">void</span> <span class="code-method">salvar</span>(<span class="code-type">Livro</span> livro);
-    <span class="code-keyword">void</span> <span class="code-method">remover</span>(<span class="code-type">Livro</span> livro);
+
+          <div class="code-section">
+            <div class="code-container">
+              <div class="code-header">
+                <div class="code-title">LivroRepository.java - Interface de Domínio</div>
+                <div class="code-dots">
+                  <div class="code-dot dot-red"></div>
+                  <div class="code-dot dot-yellow"></div>
+                  <div class="code-dot dot-green"></div>
+                </div>
+              </div>
+              <pre><code><span class="code-keyword">public</span> <span class="code-keyword">interface</span> <span class="code-type">LivroRepository</span> {
+    <span class="code-comment">// Métodos orientados ao domínio</span>
+    <span class="code-keyword">void</span> <span class="code-method">salvar</span>(<span class="code-type">Livro</span> livro);           <span class="code-comment">// Inserir ou atualizar</span>
+    <span class="code-keyword">void</span> <span class="code-method">remover</span>(<span class="code-type">Livro</span> livro);          <span class="code-comment">// Remove objeto</span>
+    <span class="code-type">Optional</span>&lt;<span class="code-type">Livro</span>&gt; <span class="code-method">buscarPorId</span>(<span class="code-type">Long</span> id);
+    <span class="code-type">List</span>&lt;<span class="code-type">Livro</span>&gt; <span class="code-method">buscarTodos</span>();
+    
+    <span class="code-comment">// Métodos específicos do domínio</span>
     <span class="code-type">List</span>&lt;<span class="code-type">Livro</span>&gt; <span class="code-method">buscarDisponiveis</span>();
     <span class="code-type">List</span>&lt;<span class="code-type">Livro</span>&gt; <span class="code-method">buscarPorAutor</span>(<span class="code-type">String</span> autor);
 }</code></pre>
+            </div>
+
+            <div class="code-container">
+              <div class="code-header">
+                <div class="code-title">Repository Implementation - Lógica de Negócio</div>
+                <div class="code-dots">
+                  <div class="code-dot dot-red"></div>
+                  <div class="code-dot dot-yellow"></div>
+                  <div class="code-dot dot-green"></div>
+                </div>
+              </div>
+              <pre><code><span class="code-annotation">@Override</span>
+<span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">salvar</span>(<span class="code-type">Livro</span> livro) {
+    <span class="code-comment">// Lógica de negócio: inserir ou atualizar</span>
+    <span class="code-keyword">if</span> (livro.<span class="code-method">getId</span>() == <span class="code-keyword">null</span>) {
+        <span class="code-method">inserir</span>(livro);
+    } <span class="code-keyword">else</span> {
+        <span class="code-method">atualizar</span>(livro);
+    }
+}
+
+<span class="code-keyword">private</span> <span class="code-keyword">void</span> <span class="code-method">inserir</span>(<span class="code-type">Livro</span> livro) {
+    <span class="code-comment">// Aqui usa DAO/Mapper para persistência</span>
+    <span class="code-type">String</span> sql = <span class="code-string">"INSERT INTO livros (titulo, autor, isbn, disponivel) VALUES (?, ?, ?, ?)"</span>;
+    <span class="code-keyword">try</span> (<span class="code-type">PreparedStatement</span> stmt = connection.<span class="code-method">prepareStatement</span>(sql)) {
+        stmt.<span class="code-method">setString</span>(1, livro.<span class="code-method">getTitulo</span>());
+        stmt.<span class="code-method">setString</span>(2, livro.<span class="code-method">getAutor</span>());
+        stmt.<span class="code-method">setString</span>(3, livro.<span class="code-method">getIsbn</span>());
+        stmt.<span class="code-method">setBoolean</span>(4, livro.<span class="code-method">isDisponivel</span>());
+        stmt.<span class="code-method">executeUpdate</span>();
+    }
+}</code></pre>
+            </div>
+
+            <div class="code-container">
+              <div class="code-header">
+                <div class="code-title">Uso via Service Layer</div>
+                <div class="code-dots">
+                  <div class="code-dot dot-red"></div>
+                  <div class="code-dot dot-yellow"></div>
+                  <div class="code-dot dot-green"></div>
+                </div>
+              </div>
+              <pre><code><span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">BibliotecaService</span> {
+    <span class="code-keyword">private</span> <span class="code-keyword">final</span> <span class="code-type">LivroRepository</span> repository;
+
+    <span class="code-keyword">public</span> <span class="code-keyword">void</span> <span class="code-method">emprestarLivro</span>(<span class="code-type">Long</span> livroId) {
+        <span class="code-comment">// Usa Repository como coleção de objetos</span>
+        <span class="code-type">Livro</span> livro = repository.<span class="code-method">buscarPorId</span>(livroId)
+            .<span class="code-method">orElseThrow</span>(() -> <span class="code-keyword">new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"Livro não encontrado"</span>));
+        
+        <span class="code-comment">// Aplica regra de negócio na entidade</span>
+        livro.<span class="code-method">emprestar</span>();
+        
+        <span class="code-comment">// Persiste mudanças via Repository</span>
+        repository.<span class="code-method">salvar</span>(livro);
+    }
+}</code></pre>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 35px 45px;
+        padding: 30px 40px;
       }
       .slide-header {
         margin-bottom: 20px;
@@ -44,21 +44,21 @@
         line-height: 1.2;
       }
       .problem-description {
-        margin-bottom: 18px;
+        margin-bottom: 15px;
         background-color: rgba(255, 255, 255, 0.05);
-        padding: 15px;
+        padding: 12px;
         border-radius: 8px;
         border-left: 4px solid #f18f01;
       }
       .problem-description p {
         margin: 0;
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.3;
       }
       .comparison-container {
         display: flex;
         flex: 1;
-        gap: 20px;
+        gap: 16px;
       }
       .code-column {
         flex: 1;
@@ -111,17 +111,17 @@
       }
       .code-content {
         flex: 1;
-        padding: 15px;
+        padding: 12px;
       }
       pre {
         margin: 0;
         background-color: #1e2f45;
         border-radius: 6px;
-        padding: 15px;
+        padding: 12px;
         overflow: auto;
-        height: calc(100% - 30px);
+        height: calc(100% - 24px);
         font-family: "Roboto Mono", monospace;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 1.3;
       }
       code {
@@ -154,9 +154,8 @@
         </div>
         <div class="problem-description">
           <p>
-            <strong>Problema:</strong> Quando temos uma classe com muitos
-            condicionais que executam comportamentos diferentes baseados em
-            tipos ou estados, o código se torna difícil de manter e estender
+            <strong>Problema:</strong> Múltiplos if/else executando comportamentos diferentes geram: <strong>1) Violação OCP</strong>, 
+            <strong>2) Duplicação de lógica</strong>, <strong>3) Dificuldade para adicionar tipos</strong>, <strong>4) Dificulta testes individuais</strong>
           </p>
         </div>
         <div class="comparison-container">
@@ -170,17 +169,27 @@
               </div>
             </div>
             <div class="code-content">
-              <pre><code><span class="code-keyword">if</span> (tipo.equals(<span class="code-string">"VIP"</span>)) {
-    <span class="code-keyword">return</span> valor * 0.9; <span class="code-comment">// 10% desconto</span>
-} <span class="code-keyword">else if</span> (tipo.equals(<span class="code-string">"PREMIUM"</span>)) {
-    <span class="code-keyword">return</span> valor * 0.8; <span class="code-comment">// 20% desconto</span>
-}
-
-<span class="code-comment">// Problemas:
-// 1. Lógica espalhada
-// 2. Difícil manutenção
-// 3. Alto acoplamento
-// 4. Difícil de testar</span></code></pre>
+              <pre><code><span class="code-keyword">public class</span> <span class="code-type">CalculadoraDesconto</span> {
+    <span class="code-keyword">public double</span> <span class="code-method">calcular</span>(<span class="code-keyword">double</span> valor, <span class="code-type">String</span> tipo) {
+        <span class="code-keyword">if</span> (tipo.equals(<span class="code-string">"REGULAR"</span>)) {
+            <span class="code-keyword">return</span> valor; <span class="code-comment">// Sem desconto</span>
+        } <span class="code-keyword">else if</span> (tipo.equals(<span class="code-string">"VIP"</span>)) {
+            <span class="code-keyword">return</span> valor * 0.9; <span class="code-comment">// 10%</span>
+        } <span class="code-keyword">else if</span> (tipo.equals(<span class="code-string">"PREMIUM"</span>)) {
+            <span class="code-keyword">return</span> valor * 0.8; <span class="code-comment">// 20%</span>
+        } <span class="code-keyword">else if</span> (tipo.equals(<span class="code-string">"FUNCIONARIO"</span>)) {
+            <span class="code-keyword">return</span> valor * 0.7; <span class="code-comment">// 30%</span>
+        }
+        <span class="code-keyword">throw new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"Inválido"</span>);
+    }
+    
+    <span class="code-keyword">public</span> <span class="code-type">String</span> <span class="code-method">obterMensagem</span>(<span class="code-type">String</span> tipo) {
+        <span class="code-comment">// Mesma lógica condicional repetida!</span>
+        <span class="code-keyword">if</span> (tipo.equals(<span class="code-string">"VIP"</span>)) {
+            <span class="code-keyword">return</span> <span class="code-string">"Cliente VIP - 10%"</span>;
+        } <span class="code-comment">// ... mais condicionais</span>
+    }
+}</code></pre>
             </div>
           </div>
           <div class="code-column">
@@ -193,20 +202,27 @@
               </div>
             </div>
             <div class="code-content">
-              <pre><code><span class="code-keyword">public</span> <span class="code-keyword">interface</span> <span class="code-type">EstrategiaDesconto</span> {
-    <span class="code-keyword">double</span> <span class="code-method">calcular</span>(<span class="code-keyword">double</span> valor);
+              <pre><code><span class="code-comment">// Strategy Interface</span>
+<span class="code-keyword">public interface</span> <span class="code-type">EstrategiaDesconto</span> {
+    <span class="code-keyword">double</span> <span class="code-method">calcularDesconto</span>(<span class="code-keyword">double</span> valor);
+    <span class="code-type">String</span> <span class="code-method">obterMensagem</span>();
 }
 
-<span class="code-keyword">public</span> <span class="code-keyword">class</span> <span class="code-type">DescontoVIP</span> <span class="code-keyword">implements</span> <span class="code-type">EstrategiaDesconto</span> {
-    <span class="code-keyword">public</span> <span class="code-keyword">double</span> <span class="code-method">calcular</span>(<span class="code-keyword">double</span> valor) {
-        <span class="code-keyword">return</span> valor * 0.9;
+<span class="code-comment">// Context</span>
+<span class="code-keyword">public class</span> <span class="code-type">CalculadoraDesconto</span> {
+    <span class="code-keyword">private</span> <span class="code-type">EstrategiaDesconto</span> estrategia;
+    
+    <span class="code-keyword">public</span> <span class="code-method">CalculadoraDesconto</span>(<span class="code-type">EstrategiaDesconto</span> estrategia) {
+        <span class="code-keyword">this</span>.estrategia = estrategia;
+    }
+    
+    <span class="code-keyword">public double</span> <span class="code-method">calcular</span>(<span class="code-keyword">double</span> valor) {
+        <span class="code-keyword">return</span> estrategia.calcularDesconto(valor);
     }
 }
 
-<span class="code-comment">// Vantagens:
-// 1. Extensível (OCP)
-// 2. Isolado e testável
-// 3. Baixo acoplamento</span></code></pre>
+<span class="code-comment">// Factory para criar estratégias</span>
+<span class="code-type">EstrategiaDescontoFactory</span>.<span class="code-method">criar</span>(<span class="code-string">"VIP"</span>);</code></pre>
             </div>
           </div>
         </div>

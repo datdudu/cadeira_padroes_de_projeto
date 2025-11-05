@@ -30,35 +30,35 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 35px 45px;
+        padding: 30px 40px;
       }
       .slide-header {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
       }
       .slide-title {
         font-family: "Montserrat", sans-serif;
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 700;
         color: #2e86ab;
-        margin: 0 0 10px 0;
-        line-height: 1.2;
+        margin: 0 0 8px 0;
+        line-height: 1.1;
       }
       .problem-description {
-        margin-bottom: 18px;
+        margin-bottom: 15px;
         background-color: rgba(255, 255, 255, 0.05);
-        padding: 15px;
+        padding: 12px;
         border-radius: 8px;
         border-left: 4px solid #f18f01;
       }
       .problem-description p {
         margin: 0;
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.3;
       }
       .comparison-container {
         display: flex;
         flex: 1;
-        gap: 20px;
+        gap: 16px;
       }
       .code-column {
         flex: 1;
@@ -71,7 +71,7 @@
       .code-header {
         display: flex;
         justify-content: space-between;
-        padding: 10px 15px;
+        padding: 8px 12px;
         align-items: center;
       }
       .before-header {
@@ -82,7 +82,7 @@
       }
       .code-label {
         font-family: "Montserrat", sans-serif;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
       }
       .before-label {
@@ -111,17 +111,17 @@
       }
       .code-content {
         flex: 1;
-        padding: 15px;
+        padding: 12px;
       }
       pre {
         margin: 0;
         background-color: #1e2f45;
         border-radius: 6px;
-        padding: 15px;
+        padding: 12px;
         overflow: auto;
-        height: calc(100% - 30px);
+        height: calc(100% - 24px);
         font-family: "Roboto Mono", monospace;
-        font-size: 16px;
+        font-size: 13px;
         line-height: 1.3;
       }
       code {
@@ -150,11 +150,10 @@
         <div class="slide-header">
           <h1 class="slide-title">Abstract Factory vs Dependency Injection</h1>
         </div>
-        <div class="problem-description">
+                <div class="problem-description">
           <p>
-            <strong>Problema:</strong> O padrão Abstract Factory cria
-            hierarquias complexas e código verboso, dificultando testes e
-            aumentando acoplamento entre componentes
+            <strong>Problema:</strong> Abstract Factory cria <strong>verbosidade excessiva</strong>, 
+            hierarquias desnecessárias e <strong>overengineering</strong> para simples criação de objetos.
           </p>
         </div>
         <div class="comparison-container">

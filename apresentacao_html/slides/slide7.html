@@ -30,10 +30,10 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 40px 50px;
+        padding: 35px 45px;
       }
       .slide-header {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
       .slide-title {
         font-family: "Montserrat", sans-serif;
@@ -55,7 +55,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        margin-top: 15px;
+        margin-top: 12px;
       }
       .big-icon {
         font-size: 60px;
@@ -68,7 +68,7 @@
       .content-item {
         display: flex;
         align-items: center;
-        margin: 15px 0;
+        margin: 12px 0;
         z-index: 1;
         position: relative;
       }
@@ -95,7 +95,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        margin: 40px 0 20px 0;
+        margin: 30px 0 15px 0;
       }
       .refactoring-box {
         flex: 1;
@@ -129,36 +129,47 @@
         <div class="big-icon"></div>
         <div class="content-container">
           <div class="content-item">
-            <div class="content-item-icon"></div>
+            <div class="content-item-icon">📚</div>
             <div class="content-item-text">
               <p><strong>Autor:</strong> Joshua Kerievsky (2004)</p>
             </div>
           </div>
           <div class="content-item">
-            <div class="content-item-icon"></div>
+            <div class="content-item-icon">🎯</div>
             <div class="content-item-text">
               <p>
-                <strong>Objetivo:</strong> Transformar código legado em padrões
-                limpos
+                <strong>Objetivo:</strong> Transformar código legado em padrões limpos
               </p>
             </div>
           </div>
           <div class="content-item">
-            <div class="content-item-icon"></div>
+            <div class="content-item-icon">⚡</div>
             <div class="content-item-text">
-              <p><strong>Duas refatorações principais:</strong></p>
+              <p><strong>Abordagem:</strong> Não introduz novos padrões, mas mostra como refatorar</p>
+            </div>
+          </div>
+          <div class="content-item">
+            <div class="content-item-icon">🏗️</div>
+            <div class="content-item-text">
+              <p><strong>Foco:</strong> Código mais limpo, extensível e testável</p>
             </div>
           </div>
           <div class="refactoring-container">
             <div class="refactoring-box">
               <h3>1. Replace Conditional with Polymorphism</h3>
-              <p>Substituir condicionais por polimorfismo</p>
+              <p>Eliminar if/else complexos com polimorfismo</p>
               <p>→ <strong>Strategy Pattern</strong></p>
+              <p style="font-size: 15px; margin-top: 8px; color: rgba(255,255,255,0.8);">
+                Viola OCP, dificulta testes e manutenção
+              </p>
             </div>
             <div class="refactoring-box">
               <h3>2. Move Embellishment to Decorator</h3>
-              <p>Mover "enfeites" para decorador</p>
+              <p>Separar responsabilidades e "enfeites"</p>
               <p>→ <strong>Decorator Pattern</strong></p>
+              <p style="font-size: 15px; margin-top: 8px; color: rgba(255,255,255,0.8);">
+                Viola SRP, combinação limitada de funcionalidades
+              </p>
             </div>
           </div>
         </div>
